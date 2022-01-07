@@ -142,6 +142,7 @@ p {
 
 a {
   @apply hover:text-black dark:hover:text-white;
+  text-decoration: underline;
 }
 
 .sbui-tabs--alt div[role='tablist'] .sbui-btn-primary {

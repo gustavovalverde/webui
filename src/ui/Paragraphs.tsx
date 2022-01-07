@@ -3,6 +3,9 @@ import React from 'react'
 import { Typography } from '.'
 
 type Paragraph = React.HTMLAttributes<HTMLParagraphElement>
+type Heading = React.HTMLAttributes<HTMLHeadingElement> & {
+  level?: 1 | 2 | 3 | 4 | 5
+}
 
 export const Text: React.FC<Paragraph> = ({ className, ...props }) => (
   <Typography.Text>
@@ -15,3 +18,10 @@ export const WhiteText: React.FC<Paragraph> = props => (
     <p {...props} />
   </Typography.Text>
 )
+
+export const Title: React.FC<Heading> = ({
+  level = 2,
+  children,
+  className,
+  style,
+}) => <Typography.Title level={level} {...{ children, className, style }} />

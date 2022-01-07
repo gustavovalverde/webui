@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { signIn } from 'next-auth/react'
 
-import { Button, Container, Text, Typography, WhiteText } from '@/ui'
+import { Button, Container, Text, Title, WhiteText } from '@/ui'
 
 import { useNextPath } from './useNextPath'
 
@@ -20,21 +20,33 @@ export const SignIn: NextPage = () => {
           alt="Man looking at item at a store"
         />
 
-        <Typography.Title level={2} className="my-7">
-          Sign in to Fonoster
-        </Typography.Title>
-        <Text>
+        <Title className="my-7">Sign in to Fonoster</Title>
+        <Text className="mb-7">
           Create a smart voice applications that meets your business needs
           without the clutter of unneeded features or historically burdensome
           customizations.
         </Text>
-        <div className="mt-7">
-          <Button onClick={() => signIn('github')}>Sign in with Github</Button>
 
-          <WhiteText className="mt-7">
-            By signing, I agree to Fonoster’s Terms and Privacy Policy.
-          </WhiteText>
-        </div>
+        <Button onClick={() => signIn('github')}>Sign in with Github</Button>
+
+        <WhiteText className="mt-7">
+          By signing, I agree to Fonoster’s{' '}
+          <a
+            href="https://fonoster.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms
+          </a>{' '}
+          and{' '}
+          <a
+            href="https://fonoster.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy.
+          </a>
+        </WhiteText>
       </div>
     </Container>
   )
