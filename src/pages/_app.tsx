@@ -1,44 +1,32 @@
-import '../styles/globals.css'
+import '../styles/styles.css'
 
-import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
-import { DefaultSeo as Seo } from 'next-seo'
+import { SessionProvider } from 'next-auth/react'
 import NextNProgress from 'nextjs-progressbar'
 
-import { Meta } from '@/ui/Meta'
+import type { AppProps } from '@/@types'
+import { Authenticated, Unauthenticated } from '@/mods/auth'
+import { Meta } from '@/ui'
 
-export default function Application({ Component, pageProps }: AppProps) {
-  const { basePath } = useRouter()
+const Application = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) => (
+  <SessionProvider session={session}>
+    <Meta />
+    <NextNProgress color="#25b37e" />
 
-  return (
-    <>
-      <Meta />
-      <Seo
-        title="The Open Source Twilio Alternative | Fonoster"
-        openGraph={{
-          type: 'website',
-          /**
-           * @todo This info should be moved into a configuration file.
-           */
-          url: 'https://console.fonoster.com/',
-          site_name: 'Fonoster',
-          images: [
-            {
-              url: `https://console.fonoster.com${basePath}/images/og/og-image.jpg`,
-              width: 800,
-              height: 600,
-              alt: 'Fonoster Og Image',
-            },
-          ],
-        }}
-        twitter={{
-          handle: '@fonoster',
-          site: '@fonoster',
-          cardType: 'summary_large_image',
-        }}
-      />
-      <NextNProgress color="#25b37e" />
-      <Component {...pageProps} />
-    </>
-  )
-}
+    <div className="dark">
+      {Component?.isProtected ? (
+        <Authenticated>
+          <Component {...pageProps} />
+        </Authenticated>
+      ) : (
+        <Unauthenticated>
+          <Component {...pageProps} />
+        </Unauthenticated>
+      )}
+    </div>
+  </SessionProvider>
+)
+
+export default Application

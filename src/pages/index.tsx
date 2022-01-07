@@ -1,1 +1,1 @@
-export { Home as default } from '@/screens/Home'
+export { SignIn as default } from '@/mods/auth'
