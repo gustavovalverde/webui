@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { CreateProjectModal } from './CreateProjectModal'
+import { CreateProjectPanel } from './CreateProjectPanel'
 
 export const Layout: React.FC = ({ children }) => (
   <>
     {children}
-    <CreateProjectModal />
+    <CreateProjectPanel />
   </>
 )

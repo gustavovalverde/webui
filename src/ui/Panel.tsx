@@ -14,7 +14,7 @@ interface Props {
   cancelButtonProps?: ButtonProps
 }
 
-export const Modal: React.FC<Props> = ({
+export const Panel: React.FC<Props> = ({
   isOpen,
   close,
   children,
