@@ -3,7 +3,7 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import fetch from 'node-fetch'
 
-import { createToken, createUser, getUser, userExist } from '@/helpers/api'
+import { createToken, createUser, getUser } from '@/helpers/api'
 
 /**
  * @todo Refactor this file's logic
@@ -13,7 +13,7 @@ async function getEmail(account) {
   // https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
   const res = await fetch('https://api.github.com/user/emails', {
     headers: {
-      Authorization: `token ${account.accessToken}`,
+      Authorization: `Bearer ${account.access_token}`,
     },
   })
 
@@ -28,7 +28,7 @@ async function getEmail(account) {
     ? emails?.sort((a, b) => b.primary - a.primary)
     : []
 
-  return sortedEmails?.[0]?.email
+  return sortedEmails[0].email as string
 }
 
 export default NextAuth({
@@ -43,27 +43,24 @@ export default NextAuth({
   jwt: {
     secret: process.env.JWT_SECRET,
   },
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
-    signOut: '/',
-  },
   callbacks: {
     async signIn({ profile, account }) {
       logger.verbose(`webui signIn [profile -> ${JSON.stringify(profile)}]`)
       logger.verbose(`webui signIn [account -> ${JSON.stringify(account)}]`)
 
       const _email = await getEmail(account)
+      const user = await getUser(_email)
 
-      if (!(await userExist(_email))) {
+      if (!user) {
         await createUser({
           email: _email,
           name: profile.name,
           // Setting this to a secured value but we won't
           // support username/password for now
-          secret: account.accessToken,
+          secret: account.access_token,
         })
       }
+
       return true
     },
     async session({ session, token }) {

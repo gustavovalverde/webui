@@ -14,9 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fonoster/auth": "^0.2.29",
-    "@fonoster/logger": "^0.2.29",
-    "@fonoster/users": "^0.2.29",
+    "@fonoster/sdk": "^0.2.29",
     "@supabase/supabase-js": "^1.29.1",
     "@supabase/ui": "^0.36.2",
     "autoprefixer": "^10.4.1",

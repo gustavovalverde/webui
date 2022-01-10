@@ -1,12 +1,16 @@
-import Auth from '@fonoster/auth'
-import Users from '@fonoster/users'
+import Fonoster from '@fonoster/sdk'
 
 // Will take the credentials and API endpoint from the environment
-const users = new Users()
-const auth = new Auth()
+const users = new Fonoster.Users()
+const auth = new Fonoster.Auth()
 
-export async function userExist(email) {
-  return (await getUser(email)) != null
+export const getProjects = async (params: {
+  accessKeyId: string
+  accessKeySecret: string
+}) => {
+  const Projects = new Fonoster.Projects(params)
+
+  return await Projects.listProjects()
 }
 
 export async function createUser(user) {
@@ -18,23 +22,15 @@ export async function createUser(user) {
 }
 
 export async function getUser(email) {
-  try {
-    // TODO: Fix not using email as a filter
-    const list = await users.listUsers({})
-    const l = list.users.filter(user => {
-      if (user.email === email) {
-        return user
-      }
-    })
-    return l[0]
-  } catch (e) {
-    console.log(e)
-    // TODO: Check for other errors, such as bad authentication
-    return null
-  }
+  // TODO: Fix not using email as a filter
+  const results = await users.listUsers({})
+
+  return results.users.find(user => user.email === email)
 }
 
 export async function createToken(accessKeyId) {
+  if (!accessKeyId) throw new Error('Missing param - accessKeyId')
+
   const response = await auth.createToken({
     accessKeyId: accessKeyId,
     roleName: 'USER',
