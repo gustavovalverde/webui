@@ -1,6 +1,8 @@
 import '../styles/styles.css'
 
 import { SessionProvider } from 'next-auth/react'
+import { useEffect } from 'react'
+import { injectStyle } from 'react-toastify/dist/inject-style'
 
 import type { AppProps } from '@/@types'
 import { Layout } from '@/components/Layout'
@@ -11,25 +13,31 @@ import { Meta } from '@/ui'
 const Application = ({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) => (
-  <SessionProvider session={session}>
-    <Meta />
-    <Progress />
+}: AppProps) => {
+  useEffect(() => {
+    injectStyle()
+  }, [])
 
-    <div className="dark">
-      {Component?.isProtected ? (
-        <Authenticated>
-          <Layout>
+  return (
+    <SessionProvider session={session}>
+      <Meta />
+      <Progress />
+
+      <div className="dark">
+        {Component?.isProtected ? (
+          <Authenticated>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Authenticated>
+        ) : (
+          <Unauthenticated>
             <Component {...pageProps} />
-          </Layout>
-        </Authenticated>
-      ) : (
-        <Unauthenticated>
-          <Component {...pageProps} />
-        </Unauthenticated>
-      )}
-    </div>
-  </SessionProvider>
-)
+          </Unauthenticated>
+        )}
+      </div>
+    </SessionProvider>
+  )
+}
 
 export default Application
