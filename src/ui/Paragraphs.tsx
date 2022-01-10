@@ -8,7 +8,7 @@ type Heading = React.HTMLAttributes<HTMLHeadingElement> & {
 
 export const Text: React.FC<Paragraph> = ({ className, ...props }) => (
   <Typography.Text>
-    <p className={`text-gray-500 dark:text-gray-300 ${className}`} {...props} />
+    <p className={`text-gray-300 dark:text-gray-300 ${className}`} {...props} />
   </Typography.Text>
 )
 

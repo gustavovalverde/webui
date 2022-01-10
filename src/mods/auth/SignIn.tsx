@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react'
 
 import { PoliciesOfUse } from '@/components/Policies'
 import { Button, Container, Text, Title } from '@/ui'
-import { SignInIcon } from '@/ui/svg'
+import { SignInIcon } from '@/ui'
 
 import { useNextPath } from './useNextPath'
 

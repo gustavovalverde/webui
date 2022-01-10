@@ -3,6 +3,7 @@ import '../styles/styles.css'
 import { SessionProvider } from 'next-auth/react'
 
 import type { AppProps } from '@/@types'
+import { Layout } from '@/components/Layout'
 import { Progress } from '@/components/Progress'
 import { Authenticated, Unauthenticated } from '@/mods/auth'
 import { Meta } from '@/ui'
@@ -18,7 +19,9 @@ const Application = ({
     <div className="dark">
       {Component?.isProtected ? (
         <Authenticated>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </Authenticated>
       ) : (
         <Unauthenticated>

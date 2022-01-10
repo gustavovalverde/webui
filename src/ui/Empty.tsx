@@ -16,7 +16,7 @@ export const Empty: React.FC<Props> = ({ title, message, buttonProps }) => (
     <div className="max-w-xl mx-auto text-center">
       <EmptyIcon className="w-14 mx-auto mb-4" />
 
-      <Title>{title}</Title>
+      <Title level={3}>{title}</Title>
       <Text>{message}</Text>
 
       {buttonProps && (

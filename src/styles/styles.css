@@ -15,11 +15,8 @@
 /* Your own custom utilities */
 
 body {
-  background-color: #181818;
-}
-
-body {
   @apply dark;
+  background-color: #181818;
 }
 
 img {
