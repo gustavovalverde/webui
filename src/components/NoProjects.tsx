@@ -1,18 +1,13 @@
 import { ButtonProps } from '@supabase/ui/dist/cjs/components/Button/Button'
-import React, { useCallback } from 'react'
+import React from 'react'
 
-import { useModals } from '@/contexts/ModalsContext'
+import { useProjectModal } from '@/hooks/useProjectModal'
 import { Empty } from '@/ui'
 
 export const NoProjects: React.FC<{ buttonProps?: ButtonProps }> = ({
   buttonProps,
 }) => {
-  const { setOpenProjectModal } = useModals()
-
-  const onClick = useCallback(
-    () => setOpenProjectModal(true),
-    [setOpenProjectModal]
-  )
+  const { open: onClick } = useProjectModal()
 
   return (
     <Empty

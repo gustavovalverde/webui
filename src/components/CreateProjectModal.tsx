@@ -1,21 +1,14 @@
-import { useCallback } from 'react'
-
 import type { AppPage } from '@/@types'
-import { useModals } from '@/contexts/ModalsContext'
+import { useProjectModal } from '@/hooks/useProjectModal'
 import { Checkbox, Input, Modal } from '@/ui'
 
 export const CreateProjectModal: AppPage = () => {
-  const { isOpenProjectModal, setOpenProjectModal } = useModals()
-
-  const onClose = useCallback(
-    () => setOpenProjectModal(false),
-    [setOpenProjectModal]
-  )
+  const { isOpen, close } = useProjectModal()
 
   return (
     <Modal
-      close={onClose}
-      isOpen={isOpenProjectModal}
+      close={close}
+      isOpen={isOpen}
       title="Create a Project to get started managing your resources"
       description="You will be able to create and manage your Providers, Numbers, SIP Agents, Domains, Functions, etc."
       saveButtonProps={{
