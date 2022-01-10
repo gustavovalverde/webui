@@ -1,4 +1,6 @@
+import { useCallback } from 'react'
 import create from 'zustand'
+import shallow from 'zustand/shallow'
 
 type Store = {
   isOpen: boolean
@@ -6,8 +8,14 @@ type Store = {
   close: () => void
 }
 
-export const useProjectModal = create<Store>(set => ({
+export const useStore = create<Store>(set => ({
   isOpen: false,
   open: () => set(() => ({ isOpen: true })),
   close: () => set(() => ({ isOpen: false })),
 }))
+
+export const useProjectModal = () =>
+  useStore(
+    useCallback(s => s, []),
+    shallow
+  )
