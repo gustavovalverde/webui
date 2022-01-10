@@ -1,6 +1,5 @@
+import { Typography } from '@supabase/ui'
 import React from 'react'
-
-import { Typography } from '.'
 
 type Paragraph = React.HTMLAttributes<HTMLParagraphElement>
 type Heading = React.HTMLAttributes<HTMLHeadingElement> & {

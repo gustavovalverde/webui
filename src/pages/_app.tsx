@@ -1,9 +1,9 @@
 import '../styles/styles.css'
 
 import { SessionProvider } from 'next-auth/react'
-import NextNProgress from 'nextjs-progressbar'
 
 import type { AppProps } from '@/@types'
+import { Progress } from '@/components/Progress'
 import { Authenticated, Unauthenticated } from '@/mods/auth'
 import { Meta } from '@/ui'
 
@@ -13,7 +13,7 @@ const Application = ({
 }: AppProps) => (
   <SessionProvider session={session}>
     <Meta />
-    <NextNProgress color="#25b37e" />
+    <Progress />
 
     <div className="dark">
       {Component?.isProtected ? (

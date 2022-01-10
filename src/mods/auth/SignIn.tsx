@@ -1,24 +1,28 @@
 import type { NextPage } from 'next'
 import { signIn } from 'next-auth/react'
+import { useCallback, useState } from 'react'
 
-import { Button, Container, Text, Title, WhiteText } from '@/ui'
+import { PoliciesOfUse } from '@/components/Policies'
+import { Button, Container, Text, Title } from '@/ui'
+import { SignInIcon } from '@/ui/svg'
 
 import { useNextPath } from './useNextPath'
 
 export const SignIn: NextPage = () => {
+  const [isLoading, setLoading] = useState(false)
+
   useNextPath()
+
+  const signInGithub = useCallback(() => {
+    setLoading(true)
+
+    signIn('github')
+  }, [])
 
   return (
     <Container>
       <div className="max-w-lg mx-auto">
-        {/**
-         * @todo Change to Image
-         */}
-        <img
-          className="w-full h-full"
-          src="/signin.svg"
-          alt="Man looking at item at a store"
-        />
+        <SignInIcon />
 
         <Title className="my-7">Sign in to Fonoster</Title>
         <Text className="mb-7">
@@ -27,26 +31,11 @@ export const SignIn: NextPage = () => {
           customizations.
         </Text>
 
-        <Button onClick={() => signIn('github')}>Sign in with Github</Button>
+        <Button loading={isLoading} onClick={signInGithub}>
+          Sign in with Github
+        </Button>
 
-        <WhiteText className="mt-7">
-          By signing, I agree to Fonoster’s{' '}
-          <a
-            href="https://fonoster.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Terms
-          </a>{' '}
-          and{' '}
-          <a
-            href="https://fonoster.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Privacy Policy.
-          </a>
-        </WhiteText>
+        <PoliciesOfUse />
       </div>
     </Container>
   )
