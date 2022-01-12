@@ -4,15 +4,6 @@ import Fonoster from '@fonoster/sdk'
 const users = new Fonoster.Users()
 const auth = new Fonoster.Auth()
 
-export const getProjects = async (params: {
-  accessKeyId: string
-  accessKeySecret: string
-}) => {
-  const Projects = new Fonoster.Projects(params)
-
-  return await Projects.listProjects()
-}
-
 export async function createUser(user) {
   try {
     await users.createUser(user)

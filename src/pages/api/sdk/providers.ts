@@ -1,7 +1,7 @@
 import Fonoster from '@fonoster/sdk'
 import { NextApiRequest } from 'next'
 
-import { getUserLogged } from '@/lib/getUserLogged'
+import { getCurrentProject } from '@/lib/getUserLogged'
 import { requestHandler } from '@/lib/sdk/requestHandler'
 import { Response } from '@/lib/sdk/Response'
 
@@ -12,7 +12,7 @@ import { Response } from '@/lib/sdk/Response'
  * @author Fonoster
  */
 const resource = async (req: NextApiRequest) =>
-  new Fonoster.Providers(await getUserLogged(req))
+  new Fonoster.Providers(getCurrentProject(req))
 
 async function post(req: NextApiRequest) {
   const provider = await (await resource(req)).createProvider(req.body)

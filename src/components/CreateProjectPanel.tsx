@@ -52,49 +52,47 @@ export const CreateProjectPanel = () => {
         onClick: handleSubmit(onSave),
       }}
     >
-      <form>
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { name, onBlur, onChange, value } }) => (
-            <Input
-              className="mb-6"
-              label="Your Project name"
-              placeholder="Type a friendly name"
-              disabled={isLoading}
-              error={
-                errors?.name &&
-                'You must enter a name for your project, try something friendly and related to your organization'
-              }
-              {...{
-                name,
-                onBlur,
-                onChange,
-                value,
-              }}
-            />
-          )}
-        />
+      <Controller
+        name="name"
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { name, onBlur, onChange, value } }) => (
+          <Input
+            className="mb-6"
+            label="Your Project name"
+            placeholder="Type a friendly name"
+            disabled={isLoading}
+            error={
+              errors?.name &&
+              'You must enter a name for your project, try something friendly and related to your organization'
+            }
+            {...{
+              name,
+              onBlur,
+              onChange,
+              value,
+            }}
+          />
+        )}
+      />
 
-        <Controller
-          name="allowExperiments"
-          control={control}
-          render={({ field: { name, onBlur, onChange, value } }) => (
-            <Checkbox
-              label="Enable experimental APIs"
-              description="Access features that aren’t yet generally available."
-              disabled={isLoading}
-              checked={value}
-              {...{
-                name,
-                onBlur,
-                onChange,
-              }}
-            />
-          )}
-        />
-      </form>
+      <Controller
+        name="allowExperiments"
+        control={control}
+        render={({ field: { name, onBlur, onChange, value } }) => (
+          <Checkbox
+            label="Enable experimental APIs"
+            description="Access features that aren’t yet generally available."
+            disabled={isLoading}
+            checked={value}
+            {...{
+              name,
+              onBlur,
+              onChange,
+            }}
+          />
+        )}
+      />
     </Panel>
   )
 }
