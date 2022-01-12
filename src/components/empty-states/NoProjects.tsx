@@ -1,13 +1,13 @@
 import { ButtonProps } from '@supabase/ui/dist/cjs/components/Button/Button'
 import React from 'react'
 
-import { useProjectModal } from '@/hooks/useProjectModal'
+import { useProjectPanel } from '@/hooks/panels/useProjectPanel'
 import { Empty } from '@/ui'
 
 export const NoProjects: React.FC<{ buttonProps?: ButtonProps }> = ({
   buttonProps,
 }) => {
-  const { open: onClick } = useProjectModal()
+  const { open: onClick } = useProjectPanel()
 
   return (
     <Empty
