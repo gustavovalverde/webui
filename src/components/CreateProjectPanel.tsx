@@ -34,7 +34,7 @@ export const CreateProjectPanel = () => {
         onSuccess() {
           onClose()
 
-          Notifier.success('Your new project has been successfully created.')
+          Notifier.success('Your new Project has been successfully created.')
         },
       }),
     [mutate, onClose]
@@ -58,13 +58,13 @@ export const CreateProjectPanel = () => {
         rules={{ required: true }}
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
-            className="mb-6"
+            className="mb-4"
             label="Your Project name"
             placeholder="Type a friendly name"
             disabled={isLoading}
             error={
               errors?.name &&
-              'You must enter a name for your project, try something friendly and related to your organization'
+              'You must enter a name for your Project, try something friendly and related to your organization'
             }
             {...{
               name,

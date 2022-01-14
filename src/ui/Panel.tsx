@@ -30,7 +30,7 @@ export const Panel: React.FC<Props> = ({
       onClose={close}
     >
       <div className="absolute inset-0 overflow-hidden">
-        <Dialog.Overlay className="absolute inset-0 bg-black opacity-50" />
+        <Dialog.Overlay className="absolute inset-0 bg-gray-800 bg-opacity-50" />
 
         <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
           <Transition.Child

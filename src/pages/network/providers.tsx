@@ -4,7 +4,7 @@ import { dehydrate } from 'react-query'
 
 import { getQueryClient } from '@/lib/queryClient'
 
-export { Numbers as default } from '@/mods/numbers'
+export { Providers as default } from '@/mods/providers'
 
 export async function getServerSideProps({ req }: NextPageContext) {
   const session = await getSession({ req })

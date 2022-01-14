@@ -21,7 +21,9 @@ async function post(req: NextApiRequest) {
 }
 
 async function get(req: NextApiRequest) {
-  const providers = await (await resource(req)).listProviders({})
+  const providers = await (
+    await resource(req)
+  ).listProviders({ pageSize: 24, pageToken: '1', view: 2 })
 
   return Response.ok(providers)
 }

@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import shallow from 'zustand/shallow'
 
-import { createPanelStore } from './createPanel'
+import { createShowingStore } from './createShowingStore'
 
-const useStore = createPanelStore()
+const useStore = createShowingStore()
 
 export const useProjectPanel = () =>
   useStore(

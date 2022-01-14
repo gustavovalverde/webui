@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 
 import type { AppProps } from '@/@types'
-import { Layout } from '@/components/Layout'
+import { Layout } from '@/components/layouts'
 import { Progress } from '@/components/Progress'
 import { getQueryClient } from '@/lib/queryClient'
 import { Authenticated, Unauthenticated } from '@/mods/auth'
@@ -32,19 +32,17 @@ const Application = ({
 
           <ReactQueryDevtools initialIsOpen={false} />
 
-          <div className="dark">
-            {Component?.isProtected ? (
-              <Authenticated>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </Authenticated>
-            ) : (
-              <Unauthenticated>
+          {Component?.isProtected ? (
+            <Authenticated>
+              <Layout>
                 <Component {...pageProps} />
-              </Unauthenticated>
-            )}
-          </div>
+              </Layout>
+            </Authenticated>
+          ) : (
+            <Unauthenticated>
+              <Component {...pageProps} />
+            </Unauthenticated>
+          )}
         </Hydrate>
       </QueryClientProvider>
     </SessionProvider>

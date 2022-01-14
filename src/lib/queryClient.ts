@@ -1,19 +1,7 @@
 import { DefaultOptions, QueryClient } from 'react-query'
 
-import { Notifier } from '@/components/Notification'
-
 // 0.5 Hours
 const DEFAULT_TIME = 1000 * 60 * 60 * 0.5
-
-const onError = e => {
-  const error: Error = e
-
-  if ('message' in error) {
-    Notifier.error(error.message)
-
-    console.error(`RT-QUERY ERROR]: ${error.message}`)
-  }
-}
 
 /**
  * React Query Options
@@ -28,10 +16,6 @@ const defaultOptions: DefaultOptions = {
     retry: 2,
     refetchOnWindowFocus: false,
     notifyOnChangeProps: ['data', 'error'],
-    onError,
-  },
-  mutations: {
-    onError,
   },
 }
 

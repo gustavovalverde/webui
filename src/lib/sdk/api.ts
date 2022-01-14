@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import { Notifier } from '@/components/Notification'
 import { getCurrentProject } from '@/hooks/useCurrentProject'
 
 const API = axios.create({
@@ -20,5 +21,19 @@ API.interceptors.request.use(config => {
       }
     : config
 })
+
+API.interceptors.response.use(
+  res => res,
+  async err => {
+    const message = err.response?.data?.message
+
+    /**
+     * @todo Create an error handler based on the messages or codes thrown by the sdk
+     */
+    if (message) Notifier.error(message)
+
+    return Promise.reject(err)
+  }
+)
 
 export { API }

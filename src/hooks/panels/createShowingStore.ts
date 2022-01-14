@@ -6,7 +6,7 @@ type Store = {
   close: () => void
 }
 
-export const createPanelStore = () =>
+export const createShowingStore = () =>
   create<Store>(set => ({
     isOpen: false,
     open: () => set(() => ({ isOpen: true })),

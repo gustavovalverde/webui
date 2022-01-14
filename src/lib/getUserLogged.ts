@@ -14,6 +14,6 @@ export const getUserLogged = async (req: NextApiRequest) => {
 }
 
 export const getCurrentProject = (req: NextApiRequest) => ({
-  accessKeyId: req.headers['X-Project-Id'] as string,
-  accessKeySecret: req.headers['X-Project-Secret'] as string,
+  accessKeyId: req.headers['x-project-id'] as string,
+  accessKeySecret: req.headers['x-project-secret'] as string,
 })

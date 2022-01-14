@@ -38,6 +38,7 @@ module.exports = {
         'accent-7': '#333',
         success: '#0070f3',
         cyan: '#79FFE1',
+        primary: '#25b37e',
         brand: {
           100: '#82dab0',
           200: '#69d3a0',
@@ -119,7 +120,7 @@ module.exports = {
       }),
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
   corePlugins: {
     preflight: true,
   },

@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import shallow from 'zustand/shallow'
 
-import { createShowingStore } from './createShowingStore'
+import { createShowingStore } from './panels/createShowingStore'
 
 const useStore = createShowingStore()
 
-export const useProviderPanel = () =>
+export const useMobileMenu = () =>
   useStore(
     useCallback(s => s, []),
     shallow
