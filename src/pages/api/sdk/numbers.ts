@@ -23,7 +23,7 @@ async function post(req: NextApiRequest) {
 async function get(req: NextApiRequest) {
   const numbers = await (
     await resource(req)
-  ).listNumbers({ pageSize: 24, pageToken: '', view: 2 })
+  ).listNumbers({ pageSize: 24, pageToken: '1', view: 2 })
 
   return Response.ok(numbers)
 }

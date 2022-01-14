@@ -51,7 +51,7 @@ export const Sidebar = () => {
                   </a>
                 </Dropdown>
               ) : (
-                <Link href={item.href as string}>
+                <Link key={item.name} href={item.href as string}>
                   <a
                     key={item.name}
                     onClick={item.onClick}

@@ -1,10 +1,10 @@
 import {
-  CollectionIcon,
-  KeyIcon,
+  // CollectionIcon,
+  // KeyIcon,
   LogoutIcon,
   PhoneIcon,
   ShoppingBagIcon,
-  VariableIcon,
+  // VariableIcon,
 } from '@heroicons/react/outline'
 import { signOut } from 'next-auth/react'
 
@@ -21,10 +21,14 @@ export const menu = [
     ],
     icon: PhoneIcon,
   },
-  { name: 'Apps', href: '#', icon: CollectionIcon },
-  { name: 'Functions', href: '#', icon: VariableIcon },
-  { name: 'Secrets', href: '#', icon: KeyIcon },
-  { name: 'Marketplace', href: '#', icon: ShoppingBagIcon },
+  // { name: 'Apps', href: '#', icon: CollectionIcon },
+  // { name: 'Functions', href: '#', icon: VariableIcon },
+  // { name: 'Secrets', href: '#', icon: KeyIcon },
+  {
+    name: 'Marketplace',
+    href: 'https://marketplace.fonoster.com',
+    icon: ShoppingBagIcon,
+  },
   {
     name: 'Sign Out',
     href: '#',

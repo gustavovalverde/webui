@@ -14,13 +14,11 @@ export const CreateNumberPanel = () => {
     reset,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       providerRef: '',
       e164Number: '',
-      aorLink: '',
       ingressInfo: {
         webhook: '',
       },
@@ -48,9 +46,6 @@ export const CreateNumberPanel = () => {
       }),
     [mutate, onClose]
   )
-
-  const aorLink = watch('aorLink')
-  const webhook = watch('ingressInfo.webhook')
 
   const hasProviders = useMemo(() => providers.length !== 0, [providers])
 
@@ -141,15 +136,19 @@ export const CreateNumberPanel = () => {
           />
 
           <Controller
-            name="aorLink"
+            name="ingressInfo.webhook"
             control={control}
+            rules={{ required: true }}
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
-                label="Address of Record (AOR)"
-                labelOptional="Optional"
-                placeholder="(e.g. sip:voice@region-nyc01)"
-                disabled={Boolean(webhook || isLoading)}
+                label="Webhook"
+                placeholder="(e.g. https://c5b6-172-22215.ngrok.io)"
+                disabled={isLoading}
+                error={
+                  errors?.ingressInfo?.webhook &&
+                  'You must enter a webhook for your Number.'
+                }
                 {...{
                   name,
                   onBlur,
@@ -159,32 +158,6 @@ export const CreateNumberPanel = () => {
               />
             )}
           />
-
-          {!aorLink && (
-            <Controller
-              name="ingressInfo.webhook"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { name, onBlur, onChange, value } }) => (
-                <Input
-                  className="mb-4"
-                  label="Webhook"
-                  placeholder="(e.g. https://c5b6-172-22215.ngrok.io)"
-                  disabled={isLoading}
-                  error={
-                    errors?.ingressInfo?.webhook &&
-                    'You must enter a webhook for your Number.'
-                  }
-                  {...{
-                    name,
-                    onBlur,
-                    onChange,
-                    value,
-                  }}
-                />
-              )}
-            />
-          )}
         </>
       ) : (
         <Spinner />
