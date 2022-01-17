@@ -24,7 +24,7 @@ export const Sidebar = () => {
                   key={item.name}
                   overlay={item.menu.map(child => (
                     <Dropdown.Item key={child.name}>
-                      <Text>
+                      <Text className="m-0">
                         <Link href={child.href}>
                           <a>{child.name}</a>
                         </Link>
