@@ -5,7 +5,7 @@ import { useMobileMenu } from '@/hooks/useMobileMenu'
 import { useTitle } from '@/hooks/useTitle'
 import { Title } from '@/ui'
 
-import { CurrentProject } from '../CurrentProject'
+import { CurrentProject } from '../../mods/projects'
 import { ResourceMenu } from './navigation/ResourceMenu'
 
 export const Header = () => {

@@ -4,6 +4,9 @@ import Fonoster from '@fonoster/sdk'
 const users = new Fonoster.Users()
 const auth = new Fonoster.Auth()
 
+/**
+ * @deprecated These hacks should be replaced by the API
+ */
 export async function createUser(user) {
   try {
     await users.createUser(user)
@@ -12,6 +15,9 @@ export async function createUser(user) {
   }
 }
 
+/**
+ * @deprecated These hacks should be replaced by the API
+ */
 export async function getUser(email) {
   // TODO: Fix not using email as a filter
   const results = await users.listUsers({})
@@ -19,6 +25,9 @@ export async function getUser(email) {
   return results.users.find(user => user.email === email)
 }
 
+/**
+ * @deprecated These hacks should be replaced by the API
+ */
 export async function createToken(accessKeyId) {
   if (!accessKeyId) throw new Error('Missing param - accessKeyId')
 

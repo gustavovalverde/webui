@@ -2,10 +2,10 @@ import { useCallback, useLayoutEffect, useState } from 'react'
 
 import type { AppPage } from '@/@types'
 import { DeleteResource } from '@/components/DeleteResource'
-import { NoNumbers } from '@/components/empty-states/NoNumbers'
 import { Notifier } from '@/components/Notification'
 import { useDeleteNumber, useNumbers } from '@/hooks/sdk/useNumbers'
 import { useTitle } from '@/hooks/useTitle'
+import { NoNumbers } from '@/mods/numbers'
 import { Button, Spinner } from '@/ui'
 
 export const Numbers: AppPage = () => {

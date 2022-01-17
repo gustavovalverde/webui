@@ -2,11 +2,12 @@ import { useCallback, useLayoutEffect, useState } from 'react'
 
 import type { AppPage } from '@/@types'
 import { DeleteResource } from '@/components/DeleteResource'
-import { NoProviders } from '@/components/empty-states'
 import { Notifier } from '@/components/Notification'
 import { useDeleteProvider, useProviders } from '@/hooks/sdk/useProviders'
 import { useTitle } from '@/hooks/useTitle'
 import { Button, Spinner } from '@/ui'
+
+import { NoProviders } from './NoProviders'
 
 export const Providers: AppPage = () => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
