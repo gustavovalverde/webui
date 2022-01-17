@@ -1,7 +1,7 @@
 import React from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast, ToastContainer, ToastContainerProps } from 'react-toastify'
 
-export const Notification = () => (
+export const Notification: React.FC<ToastContainerProps> = props => (
   <ToastContainer
     position="bottom-left"
     autoClose={5000}
@@ -12,6 +12,7 @@ export const Notification = () => (
     pauseOnFocusLoss
     draggable
     pauseOnHover
+    {...props}
   />
 )
 

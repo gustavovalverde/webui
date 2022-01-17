@@ -3,6 +3,7 @@ import { useCallback, useLayoutEffect, useState } from 'react'
 import type { AppPage } from '@/@types'
 import { DeleteResource } from '@/components/DeleteResource'
 import { Notifier } from '@/components/Notification'
+import { useProviderPanel } from '@/hooks/panels/useProviderPanel'
 import { useDeleteProvider, useProviders } from '@/hooks/sdk/useProviders'
 import { useTitle } from '@/hooks/useTitle'
 import { Button, Spinner } from '@/ui'
@@ -15,6 +16,8 @@ export const Providers: AppPage = () => {
   const [deleteRef, setDeleteRef] = useState('')
   const { setTitle } = useTitle()
   const { providers, isSuccess } = useProviders()
+
+  const { openEditing } = useProviderPanel()
 
   useLayoutEffect(() => {
     setTitle('SIP Network / VoIP Providers')
@@ -107,8 +110,8 @@ export const Providers: AppPage = () => {
                 >
                   Delete
                 </Button>
-                <Button size="small" disabled>
-                  Edit - (Available soon)
+                <Button size="small" onClick={() => openEditing(provider)}>
+                  Edit
                 </Button>
               </td>
             </tr>

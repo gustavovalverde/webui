@@ -5,9 +5,8 @@ import create from 'zustand'
 import shallow from 'zustand/shallow'
 
 import { Storage } from '@/helpers/Storage'
+import { useProjects } from '@/hooks/sdk/useProjects'
 import { useLoggedIn } from '@/mods/auth/useLoggedIn'
-
-import { useProjects } from './sdk/useProjects'
 
 type Store = {
   project: Project | null

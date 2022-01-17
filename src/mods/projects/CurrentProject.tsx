@@ -3,7 +3,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Fragment } from 'react'
 
 import { classNames } from '@/helpers/classNames'
-import { useCurrentProject } from '@/hooks/useCurrentProject'
+import { useCurrentProject } from '@/mods/projects'
 
 export const CurrentProject = () => {
   const { projects, project, setCurrentProject } = useCurrentProject()

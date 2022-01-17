@@ -1,11 +1,14 @@
 import React from 'react'
 
-import { useCurrentProject } from '@/hooks/useCurrentProject'
+import { CreateNumberPanel } from '@/mods/numbers'
+import {
+  CreateProjectPanel,
+  NoProjects,
+  useCurrentProject,
+} from '@/mods/projects'
+import { CreateProviderPanel } from '@/mods/providers'
 import { Spinner } from '@/ui'
 
-import { CreateNumberPanel } from '../../mods/numbers'
-import { CreateProjectPanel, NoProjects } from '../../mods/projects'
-import { CreateProviderPanel } from '../../mods/providers'
 import { Notification } from '../Notification'
 import { Header } from './Header'
 import { Sidebar } from './navigation'

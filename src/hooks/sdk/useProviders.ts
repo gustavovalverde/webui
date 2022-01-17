@@ -38,6 +38,21 @@ export const useCreateProvider = () => {
   )
 }
 
+export const useEditProvider = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    async (provider: CreateProviderRequest) =>
+      (await API.put(ENDPOINT_PATH, provider)).data
+        .data as CreateProviderResponse,
+    {
+      onSuccess() {
+        queryClient.invalidateQueries('providers')
+      },
+    }
+  )
+}
+
 export const useDeleteProvider = () => {
   const queryClient = useQueryClient()
 

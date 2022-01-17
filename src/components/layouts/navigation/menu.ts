@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/outline'
 import { signOut } from 'next-auth/react'
 
-import { currentProjectStorage } from '@/hooks/useCurrentProject'
+import { currentProjectStorage } from '@/mods/projects'
 
 export const menu = [
   {

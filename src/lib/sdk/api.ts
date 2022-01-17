@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { Notifier } from '@/components/Notification'
-import { getCurrentProject } from '@/hooks/useCurrentProject'
+import { getCurrentProject } from '@/mods/projects'
 
 const API = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_APP_URL}/api/sdk`,

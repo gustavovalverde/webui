@@ -4,7 +4,7 @@ import { Fragment, useRef } from 'react'
 
 import { Button, Text, Title } from '@/ui'
 
-interface Props {
+interface DeleteResourceProps {
   title?: string
   description?: string
   isLoading?: boolean
@@ -14,7 +14,7 @@ interface Props {
   onClose: () => void
 }
 
-export const DeleteResource: React.FC<Props> = ({
+export const DeleteResource: React.FC<DeleteResourceProps> = ({
   isOpen,
   onDelete,
   onClose,
