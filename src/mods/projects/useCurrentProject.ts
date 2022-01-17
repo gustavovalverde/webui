@@ -41,7 +41,8 @@ export const useCurrentProject = () => {
 
       currentProjectStorage.set(project ? JSON.stringify(project) : '')
 
-      queryClient.invalidateQueries()
+      queryClient.invalidateQueries('numbers')
+      queryClient.invalidateQueries('providers')
     },
     [setProject, queryClient]
   )
