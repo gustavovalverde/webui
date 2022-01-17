@@ -32,16 +32,22 @@ const Content: React.FC = ({ children }) => (
 )
 
 export const Layout: React.FC = ({ children }) => {
-  const { projects, isSuccess } = useCurrentProject()
+  const { hasProjects, isSuccess } = useCurrentProject()
 
   if (isSuccess)
     return (
       <>
         <Notification />
-        {projects.length ? <Content {...{ children }} /> : <NoProjects />}
+        {hasProjects ? (
+          <>
+            <Content {...{ children }} />
+            <CreateProviderPanel />
+            <CreateNumberPanel />
+          </>
+        ) : (
+          <NoProjects />
+        )}
         <CreateProjectPanel />
-        <CreateProviderPanel />
-        <CreateNumberPanel />
       </>
     )
 

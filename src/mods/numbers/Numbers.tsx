@@ -3,6 +3,7 @@ import { useCallback, useLayoutEffect, useState } from 'react'
 import type { AppPage } from '@/@types'
 import { DeleteResource } from '@/components/DeleteResource'
 import { Notifier } from '@/components/Notification'
+import { useNumberPanel } from '@/hooks/panels/useNumberPanel'
 import { useDeleteNumber, useNumbers } from '@/hooks/sdk/useNumbers'
 import { useTitle } from '@/hooks/useTitle'
 import { NoNumbers } from '@/mods/numbers'
@@ -14,6 +15,8 @@ export const Numbers: AppPage = () => {
   const [deleteRef, setDeleteRef] = useState('')
   const { setTitle } = useTitle()
   const { numbers, isSuccess } = useNumbers()
+
+  const { openEditing } = useNumberPanel()
 
   useLayoutEffect(() => {
     setTitle('SIP Network / Numbers')
@@ -97,8 +100,8 @@ export const Numbers: AppPage = () => {
                 >
                   Delete
                 </Button>
-                <Button size="small" disabled>
-                  Edit - (Available soon)
+                <Button size="small" onClick={() => openEditing(num)}>
+                  Edit
                 </Button>
               </td>
             </tr>

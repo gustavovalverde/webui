@@ -3,6 +3,7 @@ import type {
   CreateProjectResponse,
   ListProjectsResponse,
 } from '@fonoster/projects/dist/client/types'
+import { useMemo } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import { API } from '@/lib/sdk/api'
@@ -13,8 +14,12 @@ export const useProjects = (queryKey = 'projects') => {
     async () => (await API.get('/projects')).data.data
   )
 
+  const projects = useMemo(() => data?.projects ?? [], [data])
+  const hasProjects = useMemo(() => projects.length !== 0, [projects])
+
   return {
-    projects: data?.projects ?? [],
+    projects,
+    hasProjects,
     isLoading,
     isSuccess,
   }

@@ -29,7 +29,7 @@ export const getCurrentProject = () => {
 export const useCurrentProject = () => {
   const { session } = useLoggedIn()
   const queryClient = useQueryClient()
-  const { projects, isSuccess } = useProjects()
+  const { projects, hasProjects, isSuccess } = useProjects()
   const { project, setProject } = useStore(
     useCallback(s => s, []),
     shallow
@@ -47,7 +47,7 @@ export const useCurrentProject = () => {
   )
 
   useEffect(() => {
-    if (projects.length) {
+    if (hasProjects) {
       const currentProject = getCurrentProject() ?? projects[0]
 
       if (session?.user.accessKeyId !== currentProject.userRef)
@@ -55,12 +55,13 @@ export const useCurrentProject = () => {
 
       if (currentProject.ref !== project?.ref) setCurrentProject(currentProject)
     }
-  }, [projects, project, session, setCurrentProject])
+  }, [hasProjects, projects, project, session, setCurrentProject])
 
   return {
     isSuccess,
     projects,
     project,
+    hasProjects,
     setCurrentProject,
   }
 }

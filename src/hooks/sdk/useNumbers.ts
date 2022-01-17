@@ -35,6 +35,20 @@ export const useCreateNumber = () => {
   )
 }
 
+export const useEditNumber = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    async (number: CreateNumberRequest) =>
+      (await API.put('/numbers', number)).data.data as CreateNumberResponse,
+    {
+      onSuccess() {
+        queryClient.invalidateQueries('numbers')
+      },
+    }
+  )
+}
+
 export const useDeleteNumber = () => {
   const queryClient = useQueryClient()
 
