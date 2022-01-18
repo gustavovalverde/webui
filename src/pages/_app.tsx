@@ -7,10 +7,11 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 
 import type { AppProps } from '@/@types'
-import { Layout } from '@/components/layouts'
-import { Progress } from '@/components/Progress'
-import { getQueryClient } from '@/lib/queryClient'
-import { Authenticated, Unauthenticated } from '@/mods/auth'
+import { Authenticated } from '@/mods/auth/components/Authenticated'
+import { Unauthenticated } from '@/mods/auth/components/Unauthenticated'
+import { Layout } from '@/mods/shared/components/layouts'
+import { Progress } from '@/mods/shared/components/Progress'
+import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Meta } from '@/ui'
 
 const Application = ({

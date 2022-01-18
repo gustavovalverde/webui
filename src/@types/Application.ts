@@ -1,7 +1,7 @@
-import { NextApiRequest } from 'next'
+import type { NextApiRequest } from 'next'
 import type { AppProps as NextAppProps } from 'next/app'
 
-import { Response } from '@/lib/sdk/Response'
+import type { Response } from '@/mods/shared/lib/api'
 
 import type { AuthProps } from '.'
 

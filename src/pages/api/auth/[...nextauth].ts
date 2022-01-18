@@ -3,7 +3,7 @@ import NextAuth from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import fetch from 'node-fetch'
 
-import { createToken, createUser, getUser } from '@/helpers/api'
+import { createToken, createUser, getUser } from '@/mods/shared/helpers/api'
 
 /**
  * @todo Refactor this file's logic

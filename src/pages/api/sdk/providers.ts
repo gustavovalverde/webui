@@ -1,9 +1,9 @@
 import Fonoster from '@fonoster/sdk'
 import { NextApiRequest } from 'next'
 
-import { getCurrentProject } from '@/lib/getUserLogged'
-import { requestHandler } from '@/lib/sdk/requestHandler'
-import { Response } from '@/lib/sdk/Response'
+import { getServerCurrentProject } from '@/mods/auth/lib/getUserLogged'
+import { requestHandler } from '@/mods/shared/lib/api'
+import { Response } from '@/mods/shared/lib/api/Response'
 
 /**
  * Resource kind
@@ -12,7 +12,7 @@ import { Response } from '@/lib/sdk/Response'
  * @author Fonoster
  */
 const resource = async (req: NextApiRequest) =>
-  new Fonoster.Providers(getCurrentProject(req))
+  new Fonoster.Providers(getServerCurrentProject(req))
 
 async function post(req: NextApiRequest) {
   const provider = await (await resource(req)).createProvider(req.body)

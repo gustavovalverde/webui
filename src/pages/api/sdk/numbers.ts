@@ -1,9 +1,8 @@
 import Fonoster from '@fonoster/sdk'
 import { NextApiRequest } from 'next'
 
-import { getCurrentProject } from '@/lib/getUserLogged'
-import { requestHandler } from '@/lib/sdk/requestHandler'
-import { Response } from '@/lib/sdk/Response'
+import { getServerCurrentProject } from '@/mods/auth/lib/getUserLogged'
+import { requestHandler, Response } from '@/mods/shared/lib/api'
 
 /**
  * Resource kind
@@ -12,7 +11,7 @@ import { Response } from '@/lib/sdk/Response'
  * @author Fonoster
  */
 const resource = async (req: NextApiRequest) =>
-  new Fonoster.Numbers(getCurrentProject(req))
+  new Fonoster.Numbers(getServerCurrentProject(req))
 
 async function post(req: NextApiRequest) {
   const number = await (await resource(req)).createNumber(req.body)

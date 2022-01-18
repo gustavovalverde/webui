@@ -1,9 +1,8 @@
 import Fonoster from '@fonoster/sdk'
 import { NextApiRequest } from 'next'
 
-import { getUserLogged } from '@/lib/getUserLogged'
-import { requestHandler } from '@/lib/sdk/requestHandler'
-import { Response } from '@/lib/sdk/Response'
+import { getUserLogged } from '@/mods/auth/lib/getUserLogged'
+import { requestHandler, Response } from '@/mods/shared/lib/api'
 
 /**
  * Resource kind
