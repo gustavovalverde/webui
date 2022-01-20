@@ -9,7 +9,7 @@ const auth = new Fonoster.Auth()
  */
 export async function createUser(user) {
   try {
-    await users.createUser(user)
+    return await users.createUser(user)
   } catch (e) {
     console.log(e)
   }

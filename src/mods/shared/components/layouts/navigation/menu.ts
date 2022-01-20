@@ -38,6 +38,7 @@ export const menu = [
     name: 'Marketplace',
     href: 'https://marketplace.fonoster.com',
     icon: ShoppingBagIcon,
+    target: '_blank',
   },
   {
     name: 'Sign Out',

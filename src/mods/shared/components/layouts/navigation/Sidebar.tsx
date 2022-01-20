@@ -37,16 +37,6 @@ export const Sidebar = () => {
                           aria-hidden="true"
                         />
                         <span className="mt-2">{item.name}</span>
-                        {/* <svg
-                          className={classNames(
-                            open ? 'text-gray-400 rotate-90' : 'text-gray-300',
-                            'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150'
-                          )}
-                          viewBox="0 0 20 20"
-                          aria-hidden="true"
-                        >
-                          <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-                        </svg> */}
                       </Disclosure.Button>
                       <Disclosure.Panel className="space-y-1">
                         {item.menu.map(subItem => (
@@ -69,6 +59,7 @@ export const Sidebar = () => {
                       'text-gray-300 hover:bg-dark-600 hover:text-white',
                       'cursor-pointer group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
                     )}
+                    target={item?.target ?? '_self'}
                   >
                     <item.icon
                       className={classNames(

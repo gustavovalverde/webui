@@ -31,6 +31,16 @@ async function getEmail(account) {
   return sortedEmails[0].email as string
 }
 
+const isAllowedToSignIn = async (username?: string) => {
+  const { users } = (await (
+    await fetch(process.env.WAITING_LIST_URL as string)
+  ).json()) as Record<string, string[]>
+
+  const isAllowed = users.some(user => user === username)
+
+  return isAllowed || '/waiting-list'
+}
+
 export default NextAuth({
   providers: [
     GithubProvider({
@@ -49,10 +59,10 @@ export default NextAuth({
       logger.verbose(`webui signIn [account -> ${JSON.stringify(account)}]`)
 
       const _email = await getEmail(account)
-      const user = await getUser(_email)
+      let user = await getUser(_email)
 
       if (!user) {
-        await createUser({
+        user = await createUser({
           email: _email,
           name: profile.name,
           // Setting this to a secured value but we won't
@@ -61,7 +71,7 @@ export default NextAuth({
         })
       }
 
-      return true
+      return isAllowedToSignIn(profile.login as string)
     },
     async session({ session, token }) {
       const _email = await getEmail(token.account)
@@ -70,7 +80,7 @@ export default NextAuth({
       logger.verbose(`webui session [session -> ${JSON.stringify(session)}]`)
       logger.verbose(`webui session [token -> ${JSON.stringify(token)}]`)
 
-      session.endpoint = process.env.ENDPOINT
+      session.endpoint = process.env.ENDPOINT as string
 
       const data = {
         ...session?.user,
@@ -78,7 +88,7 @@ export default NextAuth({
         accessKeySecret: await createToken(user?.accessKeyId),
       }
 
-      session.user = data
+      session.user = data as any
 
       return session
     },
