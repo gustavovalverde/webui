@@ -1,9 +1,8 @@
-import { Dropdown } from '@supabase/ui'
+import { Disclosure } from '@headlessui/react'
 import Link from 'next/link'
 import React from 'react'
 
 import { classNames } from '@/mods/shared/helpers/classNames'
-import { Text } from '@/ui'
 
 import { Logo } from '../Logo'
 import { MobileMenu } from '.'
@@ -20,36 +19,47 @@ export const Sidebar = () => {
           <div className="flex-1 mt-6 w-full px-2 space-y-1">
             {menu.map(item =>
               item.menu ? (
-                <Dropdown
-                  key={item.name}
-                  overlay={item.menu.map(child => (
-                    <Dropdown.Item key={child.name}>
-                      <Text className="m-0">
-                        <Link href={child.href}>
-                          <a>{child.name}</a>
-                        </Link>
-                      </Text>
-                    </Dropdown.Item>
-                  ))}
-                >
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      'text-gray-300 hover:bg-dark-600 hover:text-white',
-                      'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
-                    )}
-                  >
-                    <item.icon
-                      className={classNames(
-                        'text-gray-300 group-hover:text-white',
-                        'h-6 w-6'
-                      )}
-                      aria-hidden="true"
-                    />
-                    <span className="mt-2">{item.name}</span>
-                  </a>
-                </Dropdown>
+                <Disclosure as="div" key={item.name} className="space-y-1">
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button
+                        className={classNames(
+                          open ? 'bg-dark-600' : '',
+                          'text-gray-300 hover:bg-dark-600 hover:text-white',
+                          'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
+                        )}
+                      >
+                        <item.icon
+                          className={classNames(
+                            'text-gray-300 group-hover:text-white',
+                            'h-6 w-6'
+                          )}
+                          aria-hidden="true"
+                        />
+                        <span className="mt-2">{item.name}</span>
+                        {/* <svg
+                          className={classNames(
+                            open ? 'text-gray-400 rotate-90' : 'text-gray-300',
+                            'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150'
+                          )}
+                          viewBox="0 0 20 20"
+                          aria-hidden="true"
+                        >
+                          <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                        </svg> */}
+                      </Disclosure.Button>
+                      <Disclosure.Panel className="space-y-1">
+                        {item.menu.map(subItem => (
+                          <Link key={subItem.name} href={subItem.href} passHref>
+                            <a className="group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium text-gray-300 hover:bg-dark-600 hover:text-white">
+                              {subItem.name}
+                            </a>
+                          </Link>
+                        ))}
+                      </Disclosure.Panel>
+                    </>
+                  )}
+                </Disclosure>
               ) : (
                 <Link key={item.name} href={item.href as string}>
                   <a

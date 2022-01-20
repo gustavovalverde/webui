@@ -44,6 +44,9 @@ export const useCurrentProject = () => {
 
       queryClient.invalidateQueries('numbers')
       queryClient.invalidateQueries('providers')
+      queryClient.invalidateQueries('call_logs')
+      queryClient.invalidateQueries('sip_logs')
+      queryClient.invalidateQueries('app_logs')
     },
     [setCurrentProject, queryClient]
   )

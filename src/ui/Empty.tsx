@@ -9,12 +9,22 @@ interface Props {
   title: string
   message: string
   buttonProps?: ButtonProps & { text: string }
+  icon?: (props: React.ComponentProps<'svg'>) => JSX.Element
 }
 
-export const Empty: React.FC<Props> = ({ title, message, buttonProps }) => (
+export const Empty: React.FC<Props> = ({
+  title,
+  message,
+  icon: Icon,
+  buttonProps,
+}) => (
   <Container>
     <div className="max-w-xl mx-auto text-center">
-      <EmptyIcon className="w-14 mx-auto mb-4" />
+      {Icon ? (
+        <Icon className="text-white w-14 mx-auto mb-4" />
+      ) : (
+        <EmptyIcon className="w-14 mx-auto mb-4" />
+      )}
 
       <Title level={3}>{title}</Title>
       <Text>{message}</Text>
