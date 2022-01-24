@@ -1,6 +1,7 @@
 import '../styles/styles.css'
 
 import { SessionProvider } from 'next-auth/react'
+import { NextQueryParamProvider } from 'next-query-params'
 import React, { useEffect, useState } from 'react'
 import { Hydrate, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
@@ -28,22 +29,24 @@ const Application = ({
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps?.dehydratedState}>
-          <Meta />
-          <Progress />
+          <NextQueryParamProvider>
+            <Meta />
+            <Progress />
 
-          <ReactQueryDevtools initialIsOpen={false} />
+            <ReactQueryDevtools initialIsOpen={false} />
 
-          {Component?.isProtected ? (
-            <Authenticated>
-              <Layout>
+            {Component?.isProtected ? (
+              <Authenticated>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </Authenticated>
+            ) : (
+              <Unauthenticated>
                 <Component {...pageProps} />
-              </Layout>
-            </Authenticated>
-          ) : (
-            <Unauthenticated>
-              <Component {...pageProps} />
-            </Unauthenticated>
-          )}
+              </Unauthenticated>
+            )}
+          </NextQueryParamProvider>
         </Hydrate>
       </QueryClientProvider>
     </SessionProvider>

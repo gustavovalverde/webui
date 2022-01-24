@@ -1,27 +1,16 @@
 import type { Project } from '@fonoster/projects/dist/client/types'
+import { StringParam, useQueryParam } from 'next-query-params'
 import { useCallback, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
-import create from 'zustand'
-import shallow from 'zustand/shallow'
 
 import { useLoggedIn } from '@/mods/auth/hooks/useLoggedIn'
 import { Storage } from '@/mods/shared/helpers/Storage'
 
 import { useProjects } from '../../hooks/useProjects'
 
-type Store = {
-  currentProject: Project | null
-  setCurrentProject: (project: Project | null) => void
-}
-
 export const currentProjectStorage = new Storage('fonoster.current_project')
 
-const useStore = create<Store>(set => ({
-  currentProject: null,
-  setCurrentProject: currentProject => set(() => ({ currentProject })),
-}))
-
-export const getCurrentProject = () => {
+export const getCurrentProjectFromStorage = () => {
   const project = currentProjectStorage.get()
 
   return project ? (JSON.parse(project) as Project) : null
@@ -31,38 +20,41 @@ export const useCurrentProject = () => {
   const { session } = useLoggedIn()
   const queryClient = useQueryClient()
   const { projects, hasProjects, isSuccess } = useProjects()
-  const { currentProject, setCurrentProject } = useStore(
-    useCallback(s => s, []),
-    shallow
-  )
+
+  const [projectRef, setProjectRef] = useQueryParam('project', StringParam)
 
   const changeCurrentProject = useCallback(
     (project: Project | null) => {
-      setCurrentProject(project)
+      setProjectRef(project?.ref)
 
       currentProjectStorage.set(project ? JSON.stringify(project) : '')
 
       queryClient.invalidateQueries()
     },
-    [setCurrentProject, queryClient]
+    [setProjectRef, queryClient]
   )
+
+  const getProject = useCallback(() => {
+    const project = projects.find(p => p.ref === projectRef)
+
+    return project ?? getCurrentProjectFromStorage() ?? projects[0]
+  }, [projectRef, projects])
 
   useEffect(() => {
     if (hasProjects) {
-      const project = getCurrentProject() ?? projects[0]
+      const project = getProject()
 
-      if (session?.user.accessKeyId !== project.userRef)
-        changeCurrentProject(null)
-
-      if (project?.ref !== currentProject?.ref) changeCurrentProject(project)
+      changeCurrentProject(
+        session?.user.accessKeyId === project.userRef ? project : null
+      )
     }
-  }, [hasProjects, projects, currentProject, session, changeCurrentProject])
+  }, [hasProjects, projects, session, getProject, changeCurrentProject])
 
   return {
     isSuccess,
     projects,
-    currentProject,
     hasProjects,
     changeCurrentProject,
+    currentProject: getProject(),
   }
 }

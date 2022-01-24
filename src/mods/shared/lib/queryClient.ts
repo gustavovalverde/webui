@@ -13,7 +13,7 @@ const defaultOptions: DefaultOptions = {
   queries: {
     cacheTime: DEFAULT_TIME,
     staleTime: DEFAULT_TIME,
-    retry: 2,
+    retry: 1,
     refetchOnWindowFocus: false,
     notifyOnChangeProps: ['data', 'error'],
   },

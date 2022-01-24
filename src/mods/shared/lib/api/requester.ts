@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getCurrentProject } from '@/mods/projects/components/current-project'
+import { getCurrentProjectFromStorage } from '@/mods/projects/components/current-project'
 import { Notifier } from '@/mods/shared/components/Notification'
 
 const API = axios.create({
@@ -8,7 +8,7 @@ const API = axios.create({
 })
 
 API.interceptors.request.use(config => {
-  const project = getCurrentProject()
+  const project = getCurrentProjectFromStorage()
 
   return project
     ? {
