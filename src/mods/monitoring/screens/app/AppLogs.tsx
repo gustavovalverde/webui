@@ -12,12 +12,15 @@ import { Json } from '@/ui/JsonViewer'
 
 import { LogsHeader } from '../../components/LogsHeader'
 import { NoLogs } from '../../components/NoLogs'
-import { useAppLogs } from '../../hooks/useLogs'
+import { useLogs } from '../../hooks/useLogs'
 import { getLevel } from '../../lib/logsUtilities'
 
 export const AppLogsBoard: AppPage = () => {
   const [timestamp, setTimestamp] = useState(TIMES[0])
-  const { events, isSuccess } = useAppLogs(timestamp.value)
+  const { events, isSuccess } = useLogs({
+    time: timestamp.value,
+    eventType: 'app',
+  })
   const { setTitle } = useTitle()
 
   useLayoutEffect(() => {

@@ -11,12 +11,15 @@ import { Badge, Spinner } from '@/ui'
 
 import { LogsHeader } from '../../components/LogsHeader'
 import { NoLogs } from '../../components/NoLogs'
-import { useCallLogs } from '../../hooks/useLogs'
+import { useLogs } from '../../hooks/useLogs'
 import { getStatus } from '../../lib/logsUtilities'
 
 export const CallLogsBoard: AppPage = () => {
   const [timestamp, setTimestamp] = useState(TIMES[0])
-  const { events, isSuccess } = useCallLogs(timestamp.value)
+  const { events, isSuccess } = useLogs({
+    time: timestamp.value,
+    eventType: 'call',
+  })
   const { setTitle } = useTitle()
 
   useLayoutEffect(() => {

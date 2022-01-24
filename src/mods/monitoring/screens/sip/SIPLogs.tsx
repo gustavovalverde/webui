@@ -12,12 +12,15 @@ import { Json } from '@/ui/JsonViewer'
 
 import { LogsHeader } from '../../components/LogsHeader'
 import { NoLogs } from '../../components/NoLogs'
-import { useSIPLogs } from '../../hooks/useLogs'
+import { useLogs } from '../../hooks/useLogs'
 import { getLevel } from '../../lib/logsUtilities'
 
 export const SIPLogsBoard: AppPage = () => {
   const [timestamp, setTimestamp] = useState(TIMES[0])
-  const { events, isSuccess } = useSIPLogs(timestamp.value)
+  const { events, isSuccess } = useLogs({
+    time: timestamp.value,
+    eventType: 'sip',
+  })
   const { setTitle } = useTitle()
 
   useLayoutEffect(() => {

@@ -1,35 +1,19 @@
 import Fonoster from '@fonoster/sdk'
-import { NextApiRequest } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 import { getUserLogged } from '@/mods/auth/lib/getUserLogged'
-import { requestHandler, Response } from '@/mods/shared/lib/api'
+import { requestHandler } from '@/mods/shared/lib/api'
 
-/**
- * Resource kind
- *
- * @description Get an instance of the Projects resource with the credentials of the user who logged in.
- * @author Fonoster
- */
-const resource = async (req: NextApiRequest) =>
-  new Fonoster.Projects(await getUserLogged(req))
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const manager = new Fonoster.Projects(await getUserLogged(req))
 
-async function post(req: NextApiRequest) {
-  const { name, allowExperiments } = req.body
+  const handlers = {
+    post: async () => manager.createProject(req.body),
+    get: async () => manager.listProjects(),
+  }
 
-  const project = await (
-    await resource(req)
-  ).createProject({
-    name,
-    allowExperiments,
-  })
-
-  return Response.created(project)
+  return requestHandler({ handlers, req, res })
 }
-
-async function get(req: NextApiRequest) {
-  const projects = await (await resource(req)).listProjects()
-
-  return Response.ok(projects)
-}
-
-export default requestHandler({ get, post })
