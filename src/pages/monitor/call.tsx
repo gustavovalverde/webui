@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from '@/mods/monitoring/screens/call'
+export { default, getServerSideProps } from '@/mods/monitoring/screens/CallLogs'

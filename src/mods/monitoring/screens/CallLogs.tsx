@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
-import { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { dehydrate } from 'react-query'
 
 import type { AppPage } from '@/@types'
@@ -8,23 +8,22 @@ import { TIMES } from '@/mods/shared/constants/filters'
 import { useTitle } from '@/mods/shared/hooks/useTitle'
 import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Badge, Spinner } from '@/ui'
-import { Json } from '@/ui/JsonViewer'
 
-import { LogsHeader } from '../../components/LogsHeader'
-import { NoLogs } from '../../components/NoLogs'
-import { useLogs } from '../../hooks/useLogs'
-import { getLevel } from '../../lib/logsUtilities'
+import { LogsHeader } from '../components/LogsHeader'
+import { NoLogs } from '../components/NoLogs'
+import { useLogs } from '../hooks/useLogs'
+import { getStatus } from '../lib/logsUtilities'
 
-export const AppLogsBoard: AppPage = () => {
+export const CallLogsBoard: AppPage = () => {
   const [timestamp, setTimestamp] = useState(TIMES[0])
   const { events, isSuccess } = useLogs({
     time: timestamp.value,
-    eventType: 'app',
+    eventType: 'call',
   })
   const { setTitle } = useTitle()
 
   useLayoutEffect(() => {
-    setTitle('Monitoring / App Logs')
+    setTitle('Monitoring / Call Logs')
   }, [setTitle])
 
   return (
@@ -38,12 +37,6 @@ export const AppLogsBoard: AppPage = () => {
             <table className="table-auto border-collapse border border-gray-500 divide-y divide-gray-400 rounded">
               <thead className="bg-gray-600">
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-                  >
-                    Severity
-                  </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
@@ -66,7 +59,37 @@ export const AppLogsBoard: AppPage = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
                   >
-                    Data
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
+                  >
+                    Direction
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
+                  >
+                    From
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
+                  >
+                    To
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
+                  >
+                    Call Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
+                  >
+                    Duration
                   </th>
                 </tr>
               </thead>
@@ -76,25 +99,37 @@ export const AppLogsBoard: AppPage = () => {
                     key={event.ref}
                     className={idx % 2 === 0 ? 'bg-gray-800' : 'bg-gray-700'}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize truncate">
-                      <Badge dot color={getLevel(event.level).color as any}>
-                        {getLevel(event.level).message}
-                      </Badge>
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white truncate max-w-[132px]">
                       {event.ref}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate max-w-[132px]">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate max-w-[132px] min-w-[260px]">
                       {new Date(event.timestamp).toUTCString()}
                     </td>
                     <td className="px-6 py-4 whitespace-normal text-sm text-gray-300 truncate max-w-[360px] min-w-[320px]">
                       {event.message}
                     </td>
-                    <td className="px-6 py-4 whitespace-normal text-sm text-gray-300 truncate max-w-[560px] min-w-[400px]">
-                      <Json
-                        data={event.body}
-                        bg={idx % 2 === 0 ? '#181818' : '#1f1f1f'}
-                      />
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize truncate">
+                      <Badge
+                        dot
+                        color={getStatus(event?.body?.status).color as any}
+                      >
+                        {getStatus(event?.body?.status).message}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize truncate">
+                      {`${event.body.direction ?? 'Unknown'}`}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">
+                      {`${event.body.from ?? 'Unknown'}`}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">
+                      {`${event.body.to ?? 'Unknown'}`}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">
+                      {`${event.body.callType ?? 'Unknown'}`}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize truncate">
+                      {`${event.body.duration ?? 'Unknown'}`}
                     </td>
                   </tr>
                 ))}
@@ -126,6 +161,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 }
 
-AppLogsBoard.isProtected = true
+CallLogsBoard.isProtected = true
 
-export default AppLogsBoard
+export default CallLogsBoard

@@ -14,17 +14,19 @@ export const Authenticated: NextPage = ({ children }) => {
   const [hasNextPageChecked, setHasNextPageChecked] = useState(false)
 
   useEffect(() => {
+    const path = redirectStore.get() as string
+
     if (isLoading) return
 
     if (!isAuthenticated) replace(`${PAGES.SIGN_IN}?redirect_to=${asPath}`)
 
-    if (isAuthenticated && redirectStore.get()) {
-      push(redirectStore.get() as string)
+    if (isAuthenticated && path) {
+      if (!path.includes(asPath)) push(path)
 
       redirectStore.destroy()
-    } else {
-      setHasNextPageChecked(true)
     }
+
+    setHasNextPageChecked(true)
   }, [asPath, replace, isLoading, isAuthenticated, push])
 
   return isAuthenticated && hasNextPageChecked ? <>{children}</> : <Spinner />

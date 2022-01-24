@@ -10,21 +10,21 @@ import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Badge, Spinner } from '@/ui'
 import { Json } from '@/ui/JsonViewer'
 
-import { LogsHeader } from '../../components/LogsHeader'
-import { NoLogs } from '../../components/NoLogs'
-import { useLogs } from '../../hooks/useLogs'
-import { getLevel } from '../../lib/logsUtilities'
+import { LogsHeader } from '../components/LogsHeader'
+import { NoLogs } from '../components/NoLogs'
+import { useLogs } from '../hooks/useLogs'
+import { getLevel } from '../lib/logsUtilities'
 
-export const SIPLogsBoard: AppPage = () => {
+export const AppLogsBoard: AppPage = () => {
   const [timestamp, setTimestamp] = useState(TIMES[0])
   const { events, isSuccess } = useLogs({
     time: timestamp.value,
-    eventType: 'sip',
+    eventType: 'app',
   })
   const { setTitle } = useTitle()
 
   useLayoutEffect(() => {
-    setTitle('Monitoring / SIP Logs')
+    setTitle('Monitoring / App Logs')
   }, [setTitle])
 
   return (
@@ -126,6 +126,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 }
 
-SIPLogsBoard.isProtected = true
+AppLogsBoard.isProtected = true
 
-export default SIPLogsBoard
+export default AppLogsBoard
