@@ -42,11 +42,7 @@ export const useCurrentProject = () => {
 
       currentProjectStorage.set(project ? JSON.stringify(project) : '')
 
-      queryClient.invalidateQueries('numbers')
-      queryClient.invalidateQueries('providers')
-      queryClient.invalidateQueries('call_logs')
-      queryClient.invalidateQueries('sip_logs')
-      queryClient.invalidateQueries('app_logs')
+      queryClient.invalidateQueries()
     },
     [setCurrentProject, queryClient]
   )

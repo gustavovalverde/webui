@@ -2,7 +2,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Fragment } from 'react'
 
-import { classNames } from '@/mods/shared/helpers/classNames'
+import { classes } from '@/mods/shared/helpers/classes'
 
 import { useCurrentProject } from './useCurrentProject'
 
@@ -38,7 +38,7 @@ export const CurrentProjectSelector = () => {
                   <Listbox.Option
                     key={item.ref}
                     className={({ active }) =>
-                      classNames(
+                      classes(
                         active ? 'text-white bg-primary' : 'text-white',
                         'cursor-default select-none relative py-2 pl-3 pr-9'
                       )
@@ -48,7 +48,7 @@ export const CurrentProjectSelector = () => {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={classNames(
+                          className={classes(
                             selected || item.ref === currentProject?.ref
                               ? 'font-semibold'
                               : 'font-normal',
@@ -60,7 +60,7 @@ export const CurrentProjectSelector = () => {
 
                         {selected || item.ref === currentProject?.ref ? (
                           <span
-                            className={classNames(
+                            className={classes(
                               active ? 'text-white' : 'text-primary',
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}

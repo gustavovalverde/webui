@@ -2,7 +2,7 @@ import { Disclosure } from '@headlessui/react'
 import Link from 'next/link'
 import React from 'react'
 
-import { classNames } from '@/mods/shared/helpers/classNames'
+import { classes } from '@/mods/shared/helpers/classes'
 
 import { Logo } from '../Logo'
 import { MobileMenu } from '.'
@@ -23,14 +23,14 @@ export const Sidebar = () => {
                   {({ open }) => (
                     <>
                       <Disclosure.Button
-                        className={classNames(
+                        className={classes(
                           open ? 'bg-dark-600' : '',
                           'text-gray-300 hover:bg-dark-600 hover:text-white',
                           'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
                         )}
                       >
                         <item.icon
-                          className={classNames(
+                          className={classes(
                             'text-gray-300 group-hover:text-white',
                             'h-6 w-6'
                           )}
@@ -55,14 +55,14 @@ export const Sidebar = () => {
                   <a
                     key={item.name}
                     onClick={item.onClick}
-                    className={classNames(
+                    className={classes(
                       'text-gray-300 hover:bg-dark-600 hover:text-white',
                       'cursor-pointer group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium'
                     )}
                     target={item?.target ?? '_self'}
                   >
                     <item.icon
-                      className={classNames(
+                      className={classes(
                         'text-gray-300 group-hover:text-white',
                         'h-6 w-6'
                       )}

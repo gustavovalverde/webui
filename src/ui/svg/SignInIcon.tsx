@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { classes } from '@/mods/shared/helpers/classes'
+
 export const SignInIcon: React.FC<React.HTMLAttributes<SVGAElement>> = ({
   className,
 }) => (
@@ -8,7 +10,7 @@ export const SignInIcon: React.FC<React.HTMLAttributes<SVGAElement>> = ({
     width="432.692"
     height="170.248"
     viewBox="0 0 432.692 170.248"
-    className={`w-full h-full ${className}`}
+    className={classes('h-full w-full', className)}
   >
     <defs>
       <clipPath>

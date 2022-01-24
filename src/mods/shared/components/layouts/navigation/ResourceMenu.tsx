@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 import { useCreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { useCreationEditingProject } from '@/mods/projects/components/creation-editing'
 import { useCreationEditingProvider } from '@/mods/providers/components/creation-editing'
-import { classNames } from '@/mods/shared/helpers/classNames'
+import { classes } from '@/mods/shared/helpers/classes'
 
 export const ResourceMenu = () => {
   const { open: openProjectPanel } = useCreationEditingProject()
@@ -44,7 +44,7 @@ export const ResourceMenu = () => {
             <Menu.Item key={name}>
               {({ active }) => (
                 <button
-                  className={classNames(
+                  className={classes(
                     active ? 'bg-gray-600' : '',
                     'w-full block px-4 py-2 text-sm text-gray-300 text-left'
                   )}

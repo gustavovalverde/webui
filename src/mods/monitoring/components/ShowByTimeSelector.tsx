@@ -4,7 +4,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import { Time, TIMES } from '@/mods/shared/constants/filters'
-import { classNames } from '@/mods/shared/helpers/classNames'
+import { classes } from '@/mods/shared/helpers/classes'
 
 interface Props {
   onChange: (data: Time) => void
@@ -54,7 +54,7 @@ export const ShowByTimeSelector: React.FC<Props> = ({ onChange }) => {
                   <Listbox.Option
                     key={time.value}
                     className={({ active }) =>
-                      classNames(
+                      classes(
                         active
                           ? 'text-white bg-gray-800 cursor-pointer'
                           : 'text-gray-300',
@@ -66,7 +66,7 @@ export const ShowByTimeSelector: React.FC<Props> = ({ onChange }) => {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={classNames(
+                          className={classes(
                             selected || time.value === data?.value
                               ? 'font-semibold text-white'
                               : 'font-normal',
@@ -78,7 +78,7 @@ export const ShowByTimeSelector: React.FC<Props> = ({ onChange }) => {
 
                         {selected || time.value === data?.value ? (
                           <span
-                            className={classNames(
+                            className={classes(
                               active ? 'text-white' : 'text-primary',
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}

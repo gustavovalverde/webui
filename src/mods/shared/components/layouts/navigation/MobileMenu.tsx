@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/outline'
 import React from 'react'
 import { Fragment } from 'react'
 
-import { classNames } from '@/mods/shared/helpers/classNames'
+import { classes } from '@/mods/shared/helpers/classes'
 import { useMobileMenu } from '@/mods/shared/hooks/useMobileMenu'
 
 import { Logo } from '../Logo'
@@ -67,13 +67,13 @@ export const MobileMenu = () => {
                       <a
                         key={item.name}
                         href={item.href}
-                        className={classNames(
+                        className={classes(
                           'text-gray-300 hover:bg-primary hover:text-white',
                           'group py-2 px-3 rounded-md flex items-center text-sm font-medium'
                         )}
                       >
                         <item.icon
-                          className={classNames(
+                          className={classes(
                             'text-gray-300 group-hover:text-white',
                             'mr-3 h-6 w-6'
                           )}
