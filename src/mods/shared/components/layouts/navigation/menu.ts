@@ -1,7 +1,7 @@
 import {
   ClipboardListIcon,
   // CollectionIcon,
-  // KeyIcon,
+  KeyIcon,
   LogoutIcon,
   PhoneIcon,
   ShoppingBagIcon,
@@ -33,7 +33,7 @@ export const menu = [
   },
   // { name: 'Apps', href: '#', icon: CollectionIcon },
   // { name: 'Functions', href: '#', icon: VariableIcon },
-  // { name: 'Secrets', href: '#', icon: KeyIcon },
+  { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   {
     name: 'Marketplace',
     href: 'https://marketplace.fonoster.com',

@@ -6,20 +6,23 @@ import { Fragment } from 'react'
 import { useCreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { useCreationEditingProject } from '@/mods/projects/components/creation-editing'
 import { useCreationEditingProvider } from '@/mods/providers/components/creation-editing'
+import { useCreationEditingSecret } from '@/mods/secrets/components/creation-editing'
 import { classes } from '@/mods/shared/helpers/classes'
 
 export const ResourceMenu = () => {
   const { open: openProjectPanel } = useCreationEditingProject()
   const { open: openProviderPanel } = useCreationEditingProvider()
   const { open: openNumberPanel } = useCreationEditingNumber()
+  const { open: openSecretPanel } = useCreationEditingSecret()
 
   const nav = useMemo(
     () => [
       { name: 'New Project', onClick: () => openProjectPanel() },
       { name: 'New Provider', onClick: () => openProviderPanel() },
       { name: 'New Number', onClick: () => openNumberPanel() },
+      { name: 'New Secret', onClick: () => openSecretPanel() },
     ],
-    [openProjectPanel, openNumberPanel, openProviderPanel]
+    [openProjectPanel, openNumberPanel, openProviderPanel, openSecretPanel]
   )
 
   return (

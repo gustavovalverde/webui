@@ -1,28 +1,24 @@
+import type { CreateSecretRequest } from '@fonoster/secrets/dist/client/types'
 import { useCallback } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Notifier } from '@/mods/shared/components/Notification'
 import { wait } from '@/mods/shared/helpers/wait'
-import { Checkbox, Input, Panel } from '@/ui'
+import { Input, Panel } from '@/ui'
 
-import { useCreateProject } from '../../hooks/useCreateProject'
-import { useCreationEditingProject } from './useCreationEditingProject'
+import { useCreateSecret } from '../../hooks/useCreateSecret'
+import { useCreationEditingSecret } from './useCreationEditingSecret'
 
-export const CreationEditingProject = () => {
+export const CreationEditingSecret: React.FC = () => {
+  const { isOpen, defaultValues, close } = useCreationEditingSecret()
   const {
     reset,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: '',
-      allowExperiments: true,
-    },
-  })
+  } = useForm<CreateSecretRequest>({ defaultValues })
 
-  const { isOpen, close } = useCreationEditingProject()
-  const { mutate, isLoading } = useCreateProject()
+  const { mutate: create, isLoading } = useCreateSecret()
 
   const onClose = useCallback(() => {
     close()
@@ -30,25 +26,26 @@ export const CreationEditingProject = () => {
   }, [close, reset])
 
   const onSave = useCallback(
-    data =>
-      mutate(data, {
+    (secret: CreateSecretRequest) => {
+      create(secret, {
         onSuccess() {
           onClose()
 
-          Notifier.success('Your new Project has been successfully created.')
+          Notifier.success('Your new Secret has been successfully created.')
         },
-      }),
-    [mutate, onClose]
+      })
+    },
+    [create, onClose]
   )
 
   return (
     <Panel
       close={onClose}
       isOpen={isOpen}
-      title="Create a Project to get started managing your resources."
-      description="Projects allow you to scope Voice Apps, SIP Agents, Providers, Numbers, Functions, Domains, and others to a specific application in your organization."
+      title="Create a Secret to connect your SIP Network resources"
+      description="You will be able to create Numbers, SIP Agents, Domains, Functions, etc."
       saveButtonProps={{
-        children: 'Create Project',
+        children: 'Create Secret',
         loading: isLoading,
         onClick: handleSubmit(onSave),
       }}
@@ -60,12 +57,12 @@ export const CreationEditingProject = () => {
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
             className="mb-4"
-            label="Your Project name"
+            label="Your name"
             placeholder="Type a friendly name"
             disabled={isLoading}
             error={
               errors?.name &&
-              'You must enter a name for your Project, try something friendly and related to your organization'
+              'You must enter a name for your Secret, try something friendly.'
             }
             {...{
               name,
@@ -78,18 +75,22 @@ export const CreationEditingProject = () => {
       />
 
       <Controller
-        name="allowExperiments"
+        name="secret"
         control={control}
+        rules={{ required: true }}
         render={({ field: { name, onBlur, onChange, value } }) => (
-          <Checkbox
-            label="Enable experimental APIs"
-            description="Access features that aren’t yet generally available."
+          <Input.TextArea
+            className="mb-4"
+            rows={12}
+            label="Your value"
+            placeholder="Type a secret value"
             disabled={isLoading}
-            checked={value}
+            error={errors?.secret && 'You must enter a secret.'}
             {...{
               name,
               onBlur,
               onChange,
+              value,
             }}
           />
         )}
