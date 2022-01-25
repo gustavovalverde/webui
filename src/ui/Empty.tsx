@@ -9,6 +9,7 @@ interface Props {
   title: string
   message: string
   buttonProps?: ButtonProps & { text: string }
+  cancelButtonProps?: ButtonProps & { text: string }
   icon?: (props: React.ComponentProps<'svg'>) => JSX.Element
 }
 
@@ -17,6 +18,7 @@ export const Empty: React.FC<Props> = ({
   message,
   icon: Icon,
   buttonProps,
+  cancelButtonProps,
 }) => (
   <Container>
     <div className="max-w-xl mx-auto text-center">
@@ -31,6 +33,11 @@ export const Empty: React.FC<Props> = ({
 
       {buttonProps && (
         <div>
+          {cancelButtonProps && (
+            <Button type="secondary" className="mr-4" {...cancelButtonProps}>
+              {cancelButtonProps.text}
+            </Button>
+          )}
           <Button {...buttonProps}>{buttonProps.text}</Button>
         </div>
       )}
