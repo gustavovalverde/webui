@@ -53,16 +53,24 @@ export const CreationEditingSecret: React.FC = () => {
       <Controller
         name="name"
         control={control}
-        rules={{ required: true }}
+        rules={{
+          required: true,
+          pattern: {
+            value: /^([a-zA-Z0-9][^*/><?\|:]*)$/,
+            message: 'Secret name must not contain special characters.',
+          },
+        }}
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
             className="mb-4"
             label="Your name"
             placeholder="Type a friendly name"
             disabled={isLoading}
+            descriptionText="Friendly name (e.g. PERSONAL_ACCESS_TOKEN)"
             error={
               errors?.name &&
-              'You must enter a name for your Secret, try something friendly.'
+              (errors.name.message ??
+                'You must enter a name for your Secret, try something friendly.')
             }
             {...{
               name,
@@ -77,7 +85,9 @@ export const CreationEditingSecret: React.FC = () => {
       <Controller
         name="secret"
         control={control}
-        rules={{ required: true }}
+        rules={{
+          required: true,
+        }}
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input.TextArea
             className="mb-4"
@@ -85,7 +95,7 @@ export const CreationEditingSecret: React.FC = () => {
             label="Your value"
             placeholder="Type a secret value"
             disabled={isLoading}
-            error={errors?.secret && 'You must enter a secret.'}
+            error={errors?.secret && 'You must enter a secret value.'}
             {...{
               name,
               onBlur,

@@ -8,12 +8,13 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const manager = new Fonoster.Secrets(getServerCurrentProject(req))
+  const manager = new Fonoster.Domains(getServerCurrentProject(req))
 
   const handlers = {
-    post: async () => manager.createSecret(req.body),
-    delete: async () => manager.deleteSecret(req.body.name),
-    get: async () => manager.listSecrets(defaultPagination),
+    post: async () => manager.createDomain(req.body),
+    put: async () => manager.updateDomain(req.body),
+    delete: async () => manager.deleteDomain(req.body.ref),
+    get: async () => manager.listDomains(defaultPagination),
   }
 
   return requestHandler({ handlers, req, res })

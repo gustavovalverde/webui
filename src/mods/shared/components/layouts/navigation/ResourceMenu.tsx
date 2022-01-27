@@ -3,6 +3,8 @@ import { PlusSmIcon } from '@heroicons/react/outline'
 import React, { useMemo } from 'react'
 import { Fragment } from 'react'
 
+import { useCreationEditingAgent } from '@/mods/agents/components/creation-editing'
+import { useCreationEditingDomain } from '@/mods/domains/components/creation-editing'
 import { useCreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { useCreationEditingProject } from '@/mods/projects/components/creation-editing'
 import { useCreationEditingProvider } from '@/mods/providers/components/creation-editing'
@@ -14,6 +16,8 @@ export const ResourceMenu = () => {
   const { open: openProviderPanel } = useCreationEditingProvider()
   const { open: openNumberPanel } = useCreationEditingNumber()
   const { open: openSecretPanel } = useCreationEditingSecret()
+  const { open: openDomainPanel } = useCreationEditingDomain()
+  const { open: openAgentPanel } = useCreationEditingAgent()
 
   const nav = useMemo(
     () => [
@@ -21,8 +25,17 @@ export const ResourceMenu = () => {
       { name: 'New Provider', onClick: () => openProviderPanel() },
       { name: 'New Number', onClick: () => openNumberPanel() },
       { name: 'New Secret', onClick: () => openSecretPanel() },
+      { name: 'New Domain', onClick: () => openDomainPanel() },
+      { name: 'New Agent', onClick: () => openAgentPanel() },
     ],
-    [openProjectPanel, openNumberPanel, openProviderPanel, openSecretPanel]
+    [
+      openProjectPanel,
+      openNumberPanel,
+      openProviderPanel,
+      openSecretPanel,
+      openDomainPanel,
+      openAgentPanel,
+    ]
   )
 
   return (

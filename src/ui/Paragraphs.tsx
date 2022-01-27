@@ -1,15 +1,18 @@
 import { Typography } from '@supabase/ui'
+import { Props } from '@supabase/ui/dist/cjs/components/Typography/Text'
 import React from 'react'
 
 import { classes } from '@/mods/shared/helpers/classes'
 
-type Paragraph = React.HTMLAttributes<HTMLParagraphElement>
+type Paragraph = React.HTMLAttributes<HTMLParagraphElement> & {
+  options?: Omit<Props, 'children'>
+}
 type Heading = React.HTMLAttributes<HTMLHeadingElement> & {
   level?: 1 | 2 | 3 | 4 | 5
 }
 
-export const Text: React.FC<Paragraph> = ({ className, ...props }) => (
-  <Typography.Text>
+export const Text: React.FC<Paragraph> = ({ className, options, ...props }) => (
+  <Typography.Text {...options}>
     <p
       className={classes('text-gray-300 dark:text-gray-300', className)}
       {...props}

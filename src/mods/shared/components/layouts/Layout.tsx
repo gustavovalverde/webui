@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { CreationEditingAgent } from '@/mods/agents/components/creation-editing'
+import { CreationEditingDomain } from '@/mods/domains/components/creation-editing'
 import { CreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { CreationEditingProject } from '@/mods/projects/components/creation-editing'
 import { useCurrentProject } from '@/mods/projects/components/current-project'
@@ -43,6 +45,8 @@ export const Layout: React.FC = ({ children }) => {
             <CreationEditingProvider />
             <CreationEditingNumber />
             <CreationEditingSecret />
+            <CreationEditingDomain />
+            <CreationEditingAgent />
           </>
         ) : (
           <NoProjects />

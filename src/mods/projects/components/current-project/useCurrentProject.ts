@@ -1,6 +1,6 @@
 import type { Project } from '@fonoster/projects/dist/client/types'
 import { StringParam, useQueryParam } from 'next-query-params'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 
 import { useLoggedIn } from '@/mods/auth/hooks/useLoggedIn'
@@ -23,11 +23,16 @@ export const useCurrentProject = () => {
 
   const [projectRef, setProjectRef] = useQueryParam('project', StringParam)
 
+  const [currentProject, setCurrentProject] = useState<Project | null>(null)
+
   const changeCurrentProject = useCallback(
     (project: Project | null) => {
       setProjectRef(project?.ref)
+      setCurrentProject(project)
 
-      currentProjectStorage.set(project ? JSON.stringify(project) : '')
+      project
+        ? currentProjectStorage.set(JSON.stringify(project))
+        : currentProjectStorage.destroy()
 
       queryClient.invalidateQueries()
     },
@@ -35,26 +40,36 @@ export const useCurrentProject = () => {
   )
 
   const getProject = useCallback(() => {
-    const project = projects.find(p => p.ref === projectRef)
+    const projectFromStorage = getCurrentProjectFromStorage()
+    const project = projects.find(
+      p => p.ref === (projectRef ?? projectFromStorage?.ref)
+    )
 
-    return project ?? getCurrentProjectFromStorage() ?? projects[0]
+    return project ?? projects[0]
   }, [projectRef, projects])
 
-  useEffect(() => {
-    if (hasProjects) {
+  const setDefaultProject = useCallback(() => {
+    if (hasProjects && isSuccess) {
       const project = getProject()
 
       changeCurrentProject(
         session?.user.accessKeyId === project.userRef ? project : null
       )
     }
-  }, [hasProjects, projects, session, getProject, changeCurrentProject])
+  }, [hasProjects, session, getProject, isSuccess, changeCurrentProject])
+
+  useEffect(() => {
+    setDefaultProject()
+  }, [setDefaultProject])
 
   return {
     isSuccess,
     projects,
     hasProjects,
     changeCurrentProject,
-    currentProject: getProject(),
+    currentProject,
+    setDefaultProject,
+    projectRef,
+    setProjectRef,
   }
 }

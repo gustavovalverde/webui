@@ -38,7 +38,7 @@ export const NumbersBoard: AppPage = () => {
       onSuccess() {
         setDeleteModalOpen(false)
 
-        Notifier.success('Your Project has been successfully deleted.')
+        Notifier.success('Your Number has been successfully deleted.')
       },
     })
   }, [mutate, deleteRef])

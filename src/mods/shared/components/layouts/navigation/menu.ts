@@ -17,8 +17,8 @@ export const menu = [
     menu: [
       { name: 'Providers', href: '/network/providers' },
       { name: 'Numbers', href: '/network/numbers' },
-      // { name: 'Domains', href: '/network/domains' },
-      // { name: 'Agents', href: '/network/agents' },
+      { name: 'Domains', href: '/network/domains' },
+      { name: 'Agents', href: '/network/agents' },
     ],
     icon: PhoneIcon,
   },

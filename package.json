@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fonoster/monitor": "^0.2.40",
-    "@fonoster/sdk": "^0.2.40",
+    "@fonoster/sdk": "^0.2.42",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@supabase/supabase-js": "^1.29.1",
