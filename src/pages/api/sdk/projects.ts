@@ -12,6 +12,7 @@ export default async function handle(
 
   const handlers = {
     post: async () => manager.createProject(req.body),
+    put: async () => manager.updateProject(req.body),
     delete: async () => manager.deleteProject(req.body.ref),
     get: async () => manager.listProjects(),
   }

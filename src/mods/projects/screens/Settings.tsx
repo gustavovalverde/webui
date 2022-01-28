@@ -11,6 +11,7 @@ import { useTitle } from '@/mods/shared/hooks/useTitle'
 import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Button, Checkbox, Text, Title } from '@/ui'
 
+import { useCreationEditingProject } from '../components/creation-editing'
 import { useCurrentProject } from '../components/current-project'
 import { useDeleteProject } from '../hooks/useDeleteProject'
 
@@ -19,6 +20,8 @@ export const Settings: AppPage = () => {
 
   const { mutate, isLoading } = useDeleteProject()
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+
+  const { openEditing } = useCreationEditingProject()
 
   const { setTitle } = useTitle()
 
@@ -113,7 +116,9 @@ export const Settings: AppPage = () => {
                   </Text>
                 </dt>
                 <dd className="flex items-center mt-1 sm:col-span-2">
-                  <Button>Edit Project</Button>
+                  <Button onClick={() => openEditing(currentProject)}>
+                    Edit Project
+                  </Button>
                 </dd>
               </div>
 
