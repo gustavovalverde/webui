@@ -1,23 +1,23 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/outline'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import Link from 'next/link'
 import { Fragment } from 'react'
 
 import { classes } from '@/mods/shared/helpers/classes'
 
+import { useProjectSettingsPanel } from '../settings'
 import { useCurrentProject } from './useCurrentProject'
 
 export const CurrentProjectSelector = () => {
   const { projects, currentProject, changeCurrentProject } = useCurrentProject()
+  const { open } = useProjectSettingsPanel()
 
   return (
     <>
-      <Link href={'/projects/settings'}>
-        <a>
-          <CogIcon className="h-6 w-6 text-gray-300 hover:text-gray-400" />
-        </a>
-      </Link>
+      <CogIcon
+        className="h-6 w-6 text-gray-300 hover:text-gray-400"
+        onClick={() => open()}
+      />
       <Listbox
         value={currentProject}
         onChange={data => changeCurrentProject(data)}

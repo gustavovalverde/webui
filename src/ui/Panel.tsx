@@ -42,7 +42,7 @@ export const Panel: React.FC<Props> = ({
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <div className="w-screen max-w-lg">
+            <div className="w-screen max-w-xl">
               <div className="h-full flex flex-col bg-white bg-gray-700 shadow-xl">
                 <div className="min-h-0 flex-1 flex flex-col pt-8 pb-6 overflow-y-auto">
                   <div className="px-4 sm:px-6">

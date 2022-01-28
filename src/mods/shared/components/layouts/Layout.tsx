@@ -6,6 +6,7 @@ import { CreationEditingNumber } from '@/mods/numbers/components/creation-editin
 import { CreationEditingProject } from '@/mods/projects/components/creation-editing'
 import { useCurrentProject } from '@/mods/projects/components/current-project'
 import { NoProjects } from '@/mods/projects/components/NoProjects'
+import { ProjectSettingsPanel } from '@/mods/projects/components/settings'
 import { CreationEditingProvider } from '@/mods/providers/components/creation-editing'
 import { CreationEditingSecret } from '@/mods/secrets/components/creation-editing'
 import { Spinner } from '@/ui'
@@ -47,6 +48,7 @@ export const Layout: React.FC = ({ children }) => {
             <CreationEditingSecret />
             <CreationEditingDomain />
             <CreationEditingAgent />
+            <ProjectSettingsPanel />
           </>
         ) : (
           <NoProjects />
