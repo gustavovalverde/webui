@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CreationEditingAgent } from '@/mods/agents/components/creation-editing'
+import { CreationEditingApp } from '@/mods/apps/components/creation-editing'
 import { CreationEditingDomain } from '@/mods/domains/components/creation-editing'
 import { CreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { CreationEditingProject } from '@/mods/projects/components/creation-editing'
@@ -49,6 +50,7 @@ export const Layout: React.FC = ({ children }) => {
             <CreationEditingDomain />
             <CreationEditingAgent />
             <ProjectSettingsPanel />
+            <CreationEditingApp />
           </>
         ) : (
           <NoProjects />

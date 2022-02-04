@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 import { Fragment } from 'react'
 
 import { useCreationEditingAgent } from '@/mods/agents/components/creation-editing'
+import { useCreationEditingApp } from '@/mods/apps/components/creation-editing'
 import { useCreationEditingDomain } from '@/mods/domains/components/creation-editing'
 import { useCreationEditingNumber } from '@/mods/numbers/components/creation-editing'
 import { useCreationEditingProject } from '@/mods/projects/components/creation-editing'
@@ -18,10 +19,12 @@ export const ResourceMenu = () => {
   const { open: openSecretPanel } = useCreationEditingSecret()
   const { open: openDomainPanel } = useCreationEditingDomain()
   const { open: openAgentPanel } = useCreationEditingAgent()
+  const { open: openAppPanel } = useCreationEditingApp()
 
   const nav = useMemo(
     () => [
       { name: 'New Project', onClick: () => openProjectPanel() },
+      { name: 'New Application', onClick: () => openAppPanel() },
       { name: 'New Provider', onClick: () => openProviderPanel() },
       { name: 'New Number', onClick: () => openNumberPanel() },
       { name: 'New Secret', onClick: () => openSecretPanel() },
@@ -35,6 +38,7 @@ export const ResourceMenu = () => {
       openSecretPanel,
       openDomainPanel,
       openAgentPanel,
+      openAppPanel,
     ]
   )
 

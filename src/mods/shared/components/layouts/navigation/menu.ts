@@ -1,6 +1,6 @@
 import {
   ClipboardListIcon,
-  // CollectionIcon,
+  CollectionIcon,
   KeyIcon,
   LogoutIcon,
   PhoneIcon,
@@ -31,7 +31,7 @@ export const menu = [
     ],
     icon: ClipboardListIcon,
   },
-  // { name: 'Apps', href: '#', icon: CollectionIcon },
+  { name: 'Apps', href: '/apps', icon: CollectionIcon },
   // { name: 'Functions', href: '#', icon: VariableIcon },
   { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   {
