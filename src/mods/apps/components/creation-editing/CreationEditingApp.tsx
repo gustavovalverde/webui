@@ -252,6 +252,7 @@ export const CreationEditingApp: React.FC = () => {
                 }}
               >
                 <Select.Option value="">Choose a Secret</Select.Option>
+                {/* eslint-disable-next-line sonarjs/no-identical-functions */}
                 {secrets.map(({ name }) => (
                   <Select.Option key={name} value={name}>
                     {name}
