@@ -78,10 +78,10 @@ export const CreationEditingNumber = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Number to connect your SIP Network resources'
-        : 'Create a Number to connect your SIP Network resources',
+        ? 'Edit a Number to handle incoming and outgoing calls.'
+        : 'Create a new Number to handle incoming and outgoing calls.',
       description:
-        'You will be able to create Numbers, SIP Agents, Domains, Functions, etc.',
+        'You will need a Number to make and receive calls from traditional phones.',
       buttonText: isEdit ? 'Edit Number' : 'Create Number',
     }),
     [isEdit]
@@ -162,8 +162,8 @@ export const CreationEditingNumber = () => {
                   <Input
                     className="mb-4"
                     label="E.164 Number"
-                    placeholder="Type a number (e.g. +16471234567)"
-                    descriptionText="Number in E.164 format (e.g. +16471234567)"
+                    placeholder="Type a number (e.g. +17853178070)"
+                    descriptionText="Number in E.164 format (e.g. +17853178070)"
                     disabled={isLoading}
                     error={
                       errors?.e164Number &&

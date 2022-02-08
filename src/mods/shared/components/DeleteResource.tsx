@@ -20,7 +20,7 @@ export const DeleteResource: React.FC<DeleteResourceProps> = ({
   onClose,
   isLoading,
   title = 'Delete Resource',
-  description = 'Are you sure you want to delete resource? Will be permanently removed from our servers forever. This action cannot be undone.',
+  description = 'Are you sure you want to delete resources? It will be permanently removed from our servers. This action cannot be undone.',
 }) => (
   <Transition.Root show={isOpen} as={Fragment}>
     <Dialog

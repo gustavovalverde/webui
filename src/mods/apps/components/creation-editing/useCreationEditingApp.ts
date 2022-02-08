@@ -18,7 +18,7 @@ const useStore = createPanelStore({
   intentsEngineConfig: {
     secretName: '',
     projectId: '',
-    welcomeIntentEvent: '',
+    welcomeIntentId: '',
     emulateTelephonyPlatform: false,
     agent: '',
     location: '',

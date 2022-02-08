@@ -13,7 +13,7 @@ export const NoProviders: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Providers"
-      message="You haven’t created a Provider yet. Use Providers to get started creating Numbers, and using the Call manager."
+      message="You haven’t created a Provider yet. You must add a Provider prior to creating a Number."
       buttonProps={{
         text: 'New Provider',
         onClick,

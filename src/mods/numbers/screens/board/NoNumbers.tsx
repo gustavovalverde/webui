@@ -12,7 +12,7 @@ export const NoNumbers: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Numbers"
-      message="You haven’t created a Provider yet. Use Providers to get started creating Numbers, and using the Call manager."
+      message="You haven’t created a Number yet. Add a new Number to handle incoming and outgoing calls."
       buttonProps={{
         text: 'New Number',
         onClick,

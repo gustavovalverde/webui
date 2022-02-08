@@ -13,7 +13,7 @@ export const NoApps: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Applications"
-      message="You haven’t created a Application yet. Use Apps to get started creating Numbers, and using the Call manager."
+      message="You haven’t created an App yet. A Fonoster App will connect your Telephony infrastructure with your Dialogflow Bots."
       buttonProps={{
         text: 'New App',
         onClick,

@@ -71,7 +71,7 @@ export const CreationEditingApp: React.FC = () => {
     () => ({
       title: isEdit
         ? 'Edit a Application to connect your SIP Network resources'
-        : 'Create a Application to connect your SIP Network resources',
+        : 'Create a Fonoster App to connect your Telephony infrastructure with your Dialogflow Bots.',
       description:
         'You will be able to create Numbers, SIP Agents, Domains, Functions, etc.',
       buttonText: isEdit ? 'Edit App' : 'Create App',
@@ -349,25 +349,6 @@ export const CreationEditingApp: React.FC = () => {
                   />
                 </>
               )}
-
-              <Controller
-                name="intentsEngineConfig.welcomeIntentEvent"
-                control={control}
-                render={({ field: { name, onBlur, onChange, value } }) => (
-                  <Input
-                    className="mb-4"
-                    label="Type a welcome intent event"
-                    placeholder="(e.g. ..."
-                    disabled={isLoading}
-                    {...{
-                      name,
-                      onBlur,
-                      onChange,
-                      value,
-                    }}
-                  />
-                )}
-              />
             </>
           )}
 
@@ -387,8 +368,8 @@ export const CreationEditingApp: React.FC = () => {
                 render={({ field: { name, onBlur, onChange, value } }) => (
                   <Input
                     className="mb-4"
-                    label="Type a activation intent ID"
-                    placeholder="(e.g. ..."
+                    label="Type an activation intent ID"
+                    placeholder="(e.g. WELCOME"
                     disabled={isLoading}
                     {...{
                       name,
@@ -407,8 +388,8 @@ export const CreationEditingApp: React.FC = () => {
                   <Input
                     className="mb-4"
                     type="number"
-                    label="Type a activation timeout"
-                    placeholder="(e.g. ..."
+                    label="Type an activation timeout (milliseconds)"
+                    placeholder="(e.g. 20000"
                     disabled={isLoading}
                     {...{
                       name,
@@ -427,8 +408,8 @@ export const CreationEditingApp: React.FC = () => {
                   <Input
                     className="mb-4"
                     type="number"
-                    label="Type a interaction timeout"
-                    placeholder="(e.g. ..."
+                    label="Type an interaction timeout (milliseconds)"
+                    placeholder="(e.g. 10000"
                     disabled={isLoading}
                     {...{
                       name,
@@ -447,7 +428,7 @@ export const CreationEditingApp: React.FC = () => {
                   <Input
                     className="mb-4"
                     label="Type a transfer message"
-                    placeholder="(e.g. ..."
+                    placeholder="(e.g. Please wait while we transfer you"
                     disabled={isLoading}
                     {...{
                       name,

@@ -62,10 +62,10 @@ export const CreationEditingProvider: React.FC = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Provider to connect your SIP Network resources'
-        : 'Create a Provider to connect your SIP Network resources',
+        ? 'Edit a Provider to connect your SIP Network resources.'
+        : 'Create a Provider to connect your SIP Network resources.',
       description:
-        'You will be able to create Numbers, SIP Agents, Domains, Functions, etc.',
+        'Before creating a Number or using the Call Manager, you must add a Provider.',
       buttonText: isEdit ? 'Edit Provider' : 'Create Provider',
     }),
     [isEdit]
@@ -188,7 +188,7 @@ export const CreationEditingProvider: React.FC = () => {
             className="mb-4"
             type="cards"
             label="Transport"
-            labelOptional="Will use TCP if none is provided"
+            labelOptional="Defaults to TCP"
             {...{
               name,
               onBlur,
