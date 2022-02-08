@@ -1,7 +1,8 @@
-import type { Number } from '@fonoster/numbers/dist/client/types'
+// import type { Number } from '@fonoster/numbers/dist/client/types'
 import { useCallback, useEffect, useMemo } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { useApps } from '@/mods/apps/hooks/useApps'
 import { useCreationEditingProvider } from '@/mods/providers/components/creation-editing'
 import { useProviders } from '@/mods/providers/hooks/useProviders'
 import { Notifier } from '@/mods/shared/components/Notification'
@@ -18,8 +19,9 @@ export const CreationEditingNumber = () => {
     reset,
     control,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<Number>({ defaultValues })
+  } = useForm({ defaultValues })
 
   useEffect(() => {
     reset(isEdit ? defaultValues : {})
@@ -34,6 +36,7 @@ export const CreationEditingNumber = () => {
   )
 
   const { providers, isSuccess } = useProviders()
+  const { apps, isSuccess: isSuccessApp } = useApps()
   const { open } = useCreationEditingProvider()
 
   const onClose = useCallback(() => {
@@ -42,7 +45,7 @@ export const CreationEditingNumber = () => {
   }, [close, reset])
 
   const onSave = useCallback(
-    (data: Number) => {
+    data => {
       const number = isEdit
         ? {
             ...data,
@@ -70,6 +73,7 @@ export const CreationEditingNumber = () => {
   )
 
   const hasProviders = useMemo(() => providers.length !== 0, [providers])
+  const hasApps = useMemo(() => apps.length !== 0, [apps])
 
   const headings = useMemo(
     () => ({
@@ -83,6 +87,9 @@ export const CreationEditingNumber = () => {
     [isEdit]
   )
 
+  const webhook = watch('ingressInfo.webhook')
+  const appRef = watch('ingressInfo.appRef')
+
   return (
     <Panel
       close={onClose}
@@ -95,7 +102,7 @@ export const CreationEditingNumber = () => {
         onClick: handleSubmit(onSave),
       }}
     >
-      {isSuccess ? (
+      {isSuccess && isSuccessApp ? (
         <>
           {!isEdit && (
             <>
@@ -175,15 +182,45 @@ export const CreationEditingNumber = () => {
           )}
 
           <Controller
+            name="ingressInfo.appRef"
+            control={control}
+            render={({ field: { name, onBlur, onChange, value } }) => (
+              <Select
+                className={hasApps ? 'mb-4' : 'mb-0'}
+                label="Select Application or type a webhook"
+                placeholder="Choose a Application"
+                disabled={!hasApps || Boolean(webhook) || isLoading}
+                error={
+                  !hasApps
+                    ? 'Before adding a Number you must create a Application'
+                    : errors?.providerRef && 'You must enter a Application'
+                }
+                {...{
+                  name,
+                  onBlur,
+                  onChange,
+                  value,
+                }}
+              >
+                <Select.Option value="">Choose a Application</Select.Option>
+                {apps.map(({ ref, name }) => (
+                  <Select.Option key={ref} value={ref}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          />
+
+          <Controller
             name="ingressInfo.webhook"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: !appRef }}
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
-                label="Webhook"
-                placeholder="(e.g. https://c5b6-172-22215.ngrok.io)"
-                disabled={isLoading}
+                placeholder="Type a webhook (e.g. https://c5b6-172-22215.ngrok.io)"
+                disabled={Boolean(appRef) || isLoading}
                 error={
                   errors?.ingressInfo?.webhook &&
                   'You must enter a webhook for your Number.'

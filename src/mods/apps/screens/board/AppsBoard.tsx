@@ -1,3 +1,4 @@
+import { PhoneIcon } from '@heroicons/react/outline'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import { useCallback, useLayoutEffect, useState } from 'react'
@@ -9,8 +10,8 @@ import { Notifier } from '@/mods/shared/components/Notification'
 import { useTitle } from '@/mods/shared/hooks/useTitle'
 import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Button, Spinner } from '@/ui'
-import { Json } from '@/ui/JsonViewer'
 
+// import { Json } from '@/ui/JsonViewer'
 import { useCreationEditingApp } from '../../components/creation-editing'
 import { useApps } from '../../hooks/useApps'
 import { useDeleteApp } from '../../hooks/useDeleteApp'
@@ -99,24 +100,7 @@ export const AppsBoard: AppPage = () => {
             >
               Enable Events
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
-              Transfer Config
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
-              Speech Config
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
-              Intents Engine Config
-            </th>
+
             <th scope="col" className="relative px-6 py-3">
               <span className="sr-only">Actions</span>
             </th>
@@ -152,24 +136,6 @@ export const AppsBoard: AppPage = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {app.enableEvents ? 'Enabled' : 'Disabled'}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                <Json
-                  data={{ ...app.transferConfig }}
-                  bg={idx % 2 === 0 ? '#181818' : '#1f1f1f'}
-                />
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                <Json
-                  data={{ ...app.speechConfig }}
-                  bg={idx % 2 === 0 ? '#181818' : '#1f1f1f'}
-                />
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                <Json
-                  data={{ ...app.intentsEngineConfig }}
-                  bg={idx % 2 === 0 ? '#181818' : '#1f1f1f'}
-                />
-              </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <Button
                   size="small"
@@ -179,8 +145,20 @@ export const AppsBoard: AppPage = () => {
                 >
                   Delete
                 </Button>
-                <Button size="small" onClick={() => openEditing(app)}>
+                <Button
+                  size="small"
+                  type="secondary"
+                  onClick={() => openEditing(app as any)}
+                >
                   Edit
+                </Button>
+                <Button
+                  size="small"
+                  className="ml-4"
+                  disabled
+                  icon={<PhoneIcon className="h-4 w-4" aria-hidden="true" />}
+                >
+                  Test Call
                 </Button>
               </td>
             </tr>

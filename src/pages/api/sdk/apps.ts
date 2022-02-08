@@ -11,17 +11,7 @@ export default async function handle(
   const manager = new Fonoster.Apps(getServerCurrentProject(req))
 
   const handlers = {
-    post: async () => {
-      const data = {
-        ...req.body,
-        intentsEngineConfig: {
-          projectId: getServerCurrentProject(req).accessKeyId,
-          ...req.body.intentsEngineConfig,
-        },
-      }
-
-      return manager.createApp(data)
-    },
+    post: async () => manager.createApp(req.body),
     put: async () =>
       manager.updateApp({
         ...req.body,

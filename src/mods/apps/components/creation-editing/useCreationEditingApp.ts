@@ -1,13 +1,11 @@
-import type { App } from '@fonoster/apps/dist/client/types'
 import { useCallback } from 'react'
 import shallow from 'zustand/shallow'
 
 import { createPanelStore } from '@/mods/shared/hooks/useCreatePanelStore'
 
-const useStore = createPanelStore<Partial<App>>({
+const useStore = createPanelStore({
   name: '',
   initialDtmf: '',
-  welcomeIntentPhrase: '',
   activationIntentId: '',
   activationTimeout: 0,
   interactionTimeout: 0,

@@ -12,8 +12,7 @@ import { useCreationEditingApp } from './useCreationEditingApp'
 
 export const CreationEditingApp: React.FC = () => {
   const [showMoreOptions, setShowMoreOptions] = useState(false)
-  const [showTransferConfig, setShowTransferConfig] = useState(false)
-  const [showIntensConfig, setShowIntentsConfig] = useState(false)
+  const [intensConfigType, setIntentsConfigType] = useState('')
 
   const { isOpen, isEdit, defaultValues, close } = useCreationEditingApp()
   const {
@@ -38,6 +37,7 @@ export const CreationEditingApp: React.FC = () => {
   const { secrets, isSuccess } = useSecrets()
 
   const onClose = useCallback(() => {
+    setIntentsConfigType('')
     close()
     wait(reset)
   }, [close, reset])
@@ -229,56 +229,134 @@ export const CreationEditingApp: React.FC = () => {
             )}
           />
 
-          <Controller
-            name="intentsEngineConfig.secretName"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { name, onBlur, onChange, value } }) => (
-              <Select
-                className={hasSecrets ? 'mb-4' : 'mb-0'}
-                label="Intents Engine Secret"
-                disabled={!hasSecrets || isLoading}
-                error={
-                  !hasSecrets
-                    ? 'Before adding a Application you must create a Secret'
-                    : errors?.speechConfig?.secretName &&
-                      'You must enter a Secret'
-                }
-                {...{
-                  name,
-                  onBlur,
-                  onChange,
-                  value,
-                }}
-              >
-                <Select.Option value="">Choose a Secret</Select.Option>
-                {/* eslint-disable-next-line sonarjs/no-identical-functions */}
-                {secrets.map(({ name }) => (
-                  <Select.Option key={name} value={name}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          />
-
-          <Checkbox
-            label="Show other configurable options"
-            description="You can configure more options for your Application."
+          <Select
+            className="mb-4"
+            label="Select Intents Engine Type"
             disabled={isLoading}
-            checked={showMoreOptions}
-            onChange={e => setShowMoreOptions(e.target.checked)}
-          />
+            value={intensConfigType}
+            onChange={({ target: { value } }) => setIntentsConfigType(value)}
+          >
+            <Select.Option value="">Choose a Engine</Select.Option>
+            {[{ name: 'DialogflowES' }].map(({ name }) => (
+              <Select.Option key={name} value={name}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
 
-          {showMoreOptions && (
+          {intensConfigType && (
             <>
               <Controller
-                name="welcomeIntentPhrase"
+                name="intentsEngineConfig.projectId"
                 control={control}
                 render={({ field: { name, onBlur, onChange, value } }) => (
                   <Input
                     className="mb-4"
-                    label="Type a welcome intent phrase"
+                    label="Type a project ID"
+                    placeholder="(e.g. ...)"
+                    labelOptional="(optional)"
+                    disabled={isLoading}
+                    {...{
+                      name,
+                      onBlur,
+                      onChange,
+                      value,
+                    }}
+                  />
+                )}
+              />
+              <Controller
+                name="intentsEngineConfig.secretName"
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { name, onBlur, onChange, value } }) => (
+                  <Select
+                    className={hasSecrets ? 'mb-4' : 'mb-0'}
+                    label="Intents Engine Secret"
+                    disabled={!hasSecrets || isLoading}
+                    error={
+                      !hasSecrets
+                        ? 'Before adding a Application you must create a Secret'
+                        : errors?.speechConfig?.secretName &&
+                          'You must enter a Secret'
+                    }
+                    {...{
+                      name,
+                      onBlur,
+                      onChange,
+                      value,
+                    }}
+                  >
+                    <Select.Option value="">Choose a Secret</Select.Option>
+                    {/* eslint-disable-next-line sonarjs/no-identical-functions */}
+                    {secrets.map(({ name }) => (
+                      <Select.Option key={name} value={name}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                )}
+              />
+
+              {intensConfigType === 'DialogflowCX' && (
+                <>
+                  <Controller
+                    name="intentsEngineConfig.agent"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { name, onBlur, onChange, value } }) => (
+                      <Input
+                        className="mb-4"
+                        label="Type a agent"
+                        placeholder="(e.g. Joe"
+                        disabled={isLoading}
+                        error={
+                          errors?.intentsEngineConfig?.agent &&
+                          'You must enter a agent'
+                        }
+                        {...{
+                          name,
+                          onBlur,
+                          onChange,
+                          value,
+                        }}
+                      />
+                    )}
+                  />
+
+                  <Controller
+                    name="intentsEngineConfig.location"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { name, onBlur, onChange, value } }) => (
+                      <Input
+                        className="mb-4"
+                        label="Type a location"
+                        placeholder="(e.g. ..."
+                        error={
+                          errors?.intentsEngineConfig?.location &&
+                          'You must enter a location'
+                        }
+                        disabled={isLoading}
+                        {...{
+                          name,
+                          onBlur,
+                          onChange,
+                          value,
+                        }}
+                      />
+                    )}
+                  />
+                </>
+              )}
+
+              <Controller
+                name="intentsEngineConfig.welcomeIntentEvent"
+                control={control}
+                render={({ field: { name, onBlur, onChange, value } }) => (
+                  <Input
+                    className="mb-4"
+                    label="Type a welcome intent event"
                     placeholder="(e.g. ..."
                     disabled={isLoading}
                     {...{
@@ -290,7 +368,19 @@ export const CreationEditingApp: React.FC = () => {
                   />
                 )}
               />
+            </>
+          )}
 
+          <Checkbox
+            label="Show other configurable options"
+            description="You can configure more options for your Application."
+            disabled={isLoading}
+            checked={showMoreOptions}
+            onChange={e => setShowMoreOptions(e.target.checked)}
+          />
+
+          {showMoreOptions && (
+            <>
               <Controller
                 name="activationIntentId"
                 control={control}
@@ -351,6 +441,25 @@ export const CreationEditingApp: React.FC = () => {
               />
 
               <Controller
+                name="transferConfig.message"
+                control={control}
+                render={({ field: { name, onBlur, onChange, value } }) => (
+                  <Input
+                    className="mb-4"
+                    label="Type a transfer message"
+                    placeholder="(e.g. ..."
+                    disabled={isLoading}
+                    {...{
+                      name,
+                      onBlur,
+                      onChange,
+                      value,
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
                 name="enableEvents"
                 control={control}
                 render={({ field: { name, onBlur, onChange, value } }) => (
@@ -367,199 +476,6 @@ export const CreationEditingApp: React.FC = () => {
                   />
                 )}
               />
-
-              <Checkbox
-                label="Show transfer options"
-                description="You can configure transfer options for your Application."
-                disabled={isLoading}
-                checked={showTransferConfig}
-                onChange={e => setShowTransferConfig(e.target.checked)}
-              />
-
-              {showTransferConfig && (
-                <>
-                  <Controller
-                    name="transferConfig.media"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a media"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-                  <Controller
-                    name="transferConfig.mediaBusy"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a media busy"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-                  <Controller
-                    name="transferConfig.mediaNoAnswer"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a media no answer"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-
-                  <Controller
-                    name="transferConfig.message"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a message"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-
-                  <Controller
-                    name="transferConfig.messageBusy"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a message busy"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-
-                  <Controller
-                    name="transferConfig.messageNoAnswer"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a message no answer"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-                </>
-              )}
-
-              <Checkbox
-                label="Show intents options"
-                description="You can configure intents options for your Application."
-                disabled={isLoading}
-                checked={showIntensConfig}
-                onChange={e => setShowIntentsConfig(e.target.checked)}
-              />
-
-              {showIntensConfig && (
-                <>
-                  <Controller
-                    name="intentsEngineConfig.agent"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a agent"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-
-                  <Controller
-                    name="intentsEngineConfig.location"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a location"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-
-                  <Controller
-                    name="intentsEngineConfig.welcomeIntentEvent"
-                    control={control}
-                    render={({ field: { name, onBlur, onChange, value } }) => (
-                      <Input
-                        className="mb-4"
-                        label="Type a welcome intent event"
-                        placeholder="(e.g. ..."
-                        disabled={isLoading}
-                        {...{
-                          name,
-                          onBlur,
-                          onChange,
-                          value,
-                        }}
-                      />
-                    )}
-                  />
-                </>
-              )}
             </>
           )}
         </>
