@@ -74,12 +74,6 @@ export const AppsBoard: AppPage = () => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
             >
-              Welcome Intent Phrase
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
               Activation Intent ID
             </th>
             <th
@@ -120,9 +114,6 @@ export const AppsBoard: AppPage = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {app.initialDtmf || 'N/A'}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.welcomeIntentPhrase || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {app.activationIntentId || 'N/A'}

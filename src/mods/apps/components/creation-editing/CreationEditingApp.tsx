@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { useCreationEditingSecret } from '@/mods/secrets/components/creation-editing'
 import { useSecrets } from '@/mods/secrets/hooks/useSecrets'
 import { Notifier } from '@/mods/shared/components/Notification'
 import { wait } from '@/mods/shared/helpers/wait'
@@ -35,6 +36,8 @@ export const CreationEditingApp: React.FC = () => {
   )
 
   const { secrets, isSuccess } = useSecrets()
+
+  const { open } = useCreationEditingSecret()
 
   const onClose = useCallback(() => {
     setIntentsConfigType('')
