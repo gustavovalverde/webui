@@ -12,7 +12,7 @@
     "lint": "next lint",
     "start": "next start",
     "prepare": "husky install",
-    "lint:check": "eslint . --ext .js,.ts",
+    "lint:check": "eslint . --ext .js,.ts,.tsx",
     "lint:format": "prettier \"./**/*.{ts,tsx}\" --check",
     "lint:ts:check": "tsc --noEmit"
   },
