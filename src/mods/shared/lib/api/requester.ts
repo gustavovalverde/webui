@@ -3,8 +3,10 @@ import axios from 'axios'
 import { getCurrentProjectFromStorage } from '@/mods/projects/components/current-project'
 import { Notifier } from '@/mods/shared/components/Notification'
 
+import { config } from '../../constants/config'
+
 const API = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_APP_URL}/api/sdk`,
+  baseURL: `${config.APP_URL}/api/sdk`,
 })
 
 API.interceptors.request.use(config => {

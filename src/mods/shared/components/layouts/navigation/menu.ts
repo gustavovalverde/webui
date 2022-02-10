@@ -22,6 +22,9 @@ export const menu = [
     ],
     icon: PhoneIcon,
   },
+  { name: 'Apps', href: '/apps', icon: CollectionIcon },
+  // { name: 'Functions', href: '#', icon: VariableIcon },
+  { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   {
     name: 'Monitoring',
     menu: [
@@ -31,9 +34,6 @@ export const menu = [
     ],
     icon: ClipboardListIcon,
   },
-  { name: 'Apps', href: '/apps', icon: CollectionIcon },
-  // { name: 'Functions', href: '#', icon: VariableIcon },
-  { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   {
     name: 'Marketplace',
     href: 'https://marketplace.fonoster.com',
