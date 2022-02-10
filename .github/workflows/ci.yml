@@ -30,6 +30,6 @@ jobs:
             # Stopping all containers
             docker-compose down
             # Removing all images
-              docker system prune -fa
-              # Restarting the service
-              docker-compose up -d
+            docker system prune -fa
+            # Restarting the service
+            docker-compose up -d
