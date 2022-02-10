@@ -19,7 +19,6 @@ export const CreationEditingNumber = () => {
     reset,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({ defaultValues })
 
@@ -77,18 +76,13 @@ export const CreationEditingNumber = () => {
 
   const headings = useMemo(
     () => ({
-      title: isEdit
-        ? 'Edit a Number to handle incoming and outgoing calls.'
-        : 'Create a new Number to handle incoming and outgoing calls.',
+      title: 'Add a new Number to handle incoming and outgoing calls.',
       description:
         'You will need a Number to make and receive calls from traditional phones.',
-      buttonText: isEdit ? 'Edit Number' : 'Create Number',
+      buttonText: isEdit ? 'Save' : 'Create Number',
     }),
     [isEdit]
   )
-
-  const webhook = watch('ingressInfo.webhook')
-  const appRef = watch('ingressInfo.appRef')
 
   return (
     <Panel
@@ -163,7 +157,6 @@ export const CreationEditingNumber = () => {
                     className="mb-4"
                     label="E.164 Number"
                     placeholder="Type a number (e.g. +17853178070)"
-                    descriptionText="Number in E.164 format (e.g. +17853178070)"
                     disabled={isLoading}
                     error={
                       errors?.e164Number &&
@@ -182,45 +175,14 @@ export const CreationEditingNumber = () => {
           )}
 
           <Controller
-            name="ingressInfo.appRef"
-            control={control}
-            render={({ field: { name, onBlur, onChange, value } }) => (
-              <Select
-                className={hasApps ? 'mb-4' : 'mb-0'}
-                label="Select Application or type a webhook"
-                placeholder="Choose a Application"
-                disabled={!hasApps || Boolean(webhook) || isLoading}
-                error={
-                  !hasApps
-                    ? 'Before adding a Number you must create a Application'
-                    : errors?.providerRef && 'You must enter a Application'
-                }
-                {...{
-                  name,
-                  onBlur,
-                  onChange,
-                  value,
-                }}
-              >
-                <Select.Option value="">Choose a Application</Select.Option>
-                {apps.map(({ ref, name }) => (
-                  <Select.Option key={ref} value={ref}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          />
-
-          <Controller
             name="ingressInfo.webhook"
             control={control}
-            rules={{ required: !appRef }}
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
+                label="Webhook URL"
                 placeholder="Type a webhook (e.g. https://c5b6-172-22215.ngrok.io)"
-                disabled={Boolean(appRef) || isLoading}
+                disabled={isLoading}
                 error={
                   errors?.ingressInfo?.webhook &&
                   'You must enter a webhook for your Number.'
@@ -232,6 +194,39 @@ export const CreationEditingNumber = () => {
                   value,
                 }}
               />
+            )}
+          />
+
+          <Controller
+            name="ingressInfo.appRef"
+            control={control}
+            render={({ field: { name, onBlur, onChange, value } }) => (
+              <Select
+                className={hasApps ? 'mb-4' : 'mb-0'}
+                label="Optional Voice Application"
+                placeholder="Choose Application"
+                descriptionText="If the webhook parameter is set, we will forward the call to your Voice Application. If no webhook is set, but you select an Application we will connect your call to a managed resource."
+                disabled={!hasApps || isLoading}
+                error={
+                  !hasApps
+                    ? 'Before adding a Number you must create a Application'
+                    : errors?.ingressInfo?.appRef &&
+                      'You must enter a Application'
+                }
+                {...{
+                  name,
+                  onBlur,
+                  onChange,
+                  value,
+                }}
+              >
+                <Select.Option value="">Choose Application</Select.Option>
+                {apps.map(({ ref, name }) => (
+                  <Select.Option key={ref} value={ref}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             )}
           />
         </>

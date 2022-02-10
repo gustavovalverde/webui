@@ -69,11 +69,11 @@ export const CreationEditingAgent = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Agent to connect your SIP Network resources'
-        : 'Create a Agent to connect your SIP Network resources',
+        ? 'Edit the SIP Agent'
+        : 'Create a SIP Agent for your internal communications.',
       description:
-        'You will be able to create Agents, SIP Agents, Domains, Functions, etc.',
-      buttonText: isEdit ? 'Edit Agent' : 'Create Agent',
+        'SIP Agents in the same Domain can call each other with Voice Over IP using a Software Phone (e.g Zoiper)',
+      buttonText: isEdit ? 'Save' : 'Create Agent',
     }),
     [isEdit]
   )

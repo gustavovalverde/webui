@@ -23,7 +23,7 @@ export const SecretsBoard: AppPage = () => {
   const { secrets, isSuccess } = useSecrets()
 
   useLayoutEffect(() => {
-    setTitle('Console / Secrets')
+    setTitle('Project Secrets')
   }, [setTitle])
 
   const onOpen = useCallback((refId: string) => {
@@ -48,8 +48,9 @@ export const SecretsBoard: AppPage = () => {
       <div className="mb-4 lg:w-4/6">
         <Title level={3}>Secrets Management</Title>
         <Text className="whitespace-normal">
-          Secrets are Project variables that are encrypted. Anyone access to
-          this account can use these secrets.
+          Secrets are encrypted variables that you can you use in your Voice
+          Applications. Your secrets are only available for use within the
+          Project.
           <br />
           <a
             className="term"
@@ -72,7 +73,7 @@ export const SecretsBoard: AppPage = () => {
             </div>
             <div className="flex-1 min-w-0">
               <span className="absolute inset-0" aria-hidden="true" />
-              <Title level={5} className="m-0 uppercase">
+              <Title level={5} className="m-0">
                 {secret.name}
               </Title>
 

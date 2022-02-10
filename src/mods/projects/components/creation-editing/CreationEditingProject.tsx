@@ -66,7 +66,7 @@ export const CreationEditingProject = () => {
         : 'Create a Project to get started managing your resources.',
       description:
         'Projects allow you to scope Voice Apps, SIP Agents, Providers, Numbers, Functions, Domains, and others to a specific application in your organization.',
-      buttonText: isEdit ? 'Edit Project' : 'Create Project',
+      buttonText: isEdit ? 'Save' : 'Create Project',
     }),
     [isEdit]
   )

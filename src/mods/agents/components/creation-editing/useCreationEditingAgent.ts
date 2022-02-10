@@ -9,7 +9,7 @@ const useStore = createPanelStore<Partial<Agent>>({
   username: '',
   secret: '',
   domains: [],
-  privacy: '',
+  privacy: 'Private',
 })
 
 export const useCreationEditingAgent = () =>

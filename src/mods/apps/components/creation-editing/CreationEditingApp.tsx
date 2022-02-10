@@ -77,7 +77,7 @@ export const CreationEditingApp: React.FC = () => {
         : 'Create a Fonoster App to connect your Telephony infrastructure with your Dialogflow Bots.',
       description:
         'You will be able to create Numbers, SIP Agents, Domains, Functions, etc.',
-      buttonText: isEdit ? 'Edit App' : 'Create App',
+      buttonText: isEdit ? 'Save' : 'Create App',
     }),
     [isEdit]
   )
@@ -103,7 +103,7 @@ export const CreationEditingApp: React.FC = () => {
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
-                label="Your name"
+                label="Application Name"
                 placeholder="Type a friendly name"
                 disabled={isLoading}
                 error={
@@ -127,9 +127,8 @@ export const CreationEditingApp: React.FC = () => {
               <Input
                 className="mb-4"
                 label="Initial DTMF"
-                type="number"
                 labelOptional="(optional)"
-                placeholder="(e.g. 1234)"
+                placeholder="It’s a string that allows 1234567890#*"
                 disabled={isLoading}
                 {...{
                   name,
@@ -252,13 +251,17 @@ export const CreationEditingApp: React.FC = () => {
               <Controller
                 name="intentsEngineConfig.projectId"
                 control={control}
+                rules={{ required: true }}
                 render={({ field: { name, onBlur, onChange, value } }) => (
                   <Input
                     className="mb-4"
                     label="Type a project ID"
-                    placeholder="(e.g. ...)"
-                    labelOptional="(optional)"
+                    placeholder="(e.g my-gcp-project)"
                     disabled={isLoading}
+                    error={
+                      errors?.intentsEngineConfig?.projectId &&
+                      'You must enter a project ID for your Application.'
+                    }
                     {...{
                       name,
                       onBlur,
@@ -356,7 +359,7 @@ export const CreationEditingApp: React.FC = () => {
           )}
 
           <Checkbox
-            label="Show other configurable options"
+            label="Show advance options"
             description="You can configure more options for your Application."
             disabled={isLoading}
             checked={showMoreOptions}
@@ -371,7 +374,7 @@ export const CreationEditingApp: React.FC = () => {
                 render={({ field: { name, onBlur, onChange, value } }) => (
                   <Input
                     className="mb-4"
-                    label="Type an activation intent ID"
+                    label="Type the activation intent ID"
                     placeholder="(e.g. WELCOME"
                     disabled={isLoading}
                     {...{
@@ -391,8 +394,8 @@ export const CreationEditingApp: React.FC = () => {
                   <Input
                     className="mb-4"
                     type="number"
-                    label="Type an activation timeout (milliseconds)"
-                    placeholder="(e.g. 20000"
+                    label="Type the activation timeout"
+                    placeholder="(e.g. 15000)"
                     disabled={isLoading}
                     {...{
                       name,
@@ -411,8 +414,8 @@ export const CreationEditingApp: React.FC = () => {
                   <Input
                     className="mb-4"
                     type="number"
-                    label="Type an interaction timeout (milliseconds)"
-                    placeholder="(e.g. 10000"
+                    label="Type the interaction timeout"
+                    placeholder="(e.g. 10000)"
                     disabled={isLoading}
                     {...{
                       name,
@@ -438,24 +441,6 @@ export const CreationEditingApp: React.FC = () => {
                       onBlur,
                       onChange,
                       value,
-                    }}
-                  />
-                )}
-              />
-
-              <Controller
-                name="enableEvents"
-                control={control}
-                render={({ field: { name, onBlur, onChange, value } }) => (
-                  <Checkbox
-                    label="Enable Events"
-                    description="Enable Events for your Application."
-                    disabled={isLoading}
-                    checked={Boolean(value)}
-                    {...{
-                      name,
-                      onBlur,
-                      onChange,
                     }}
                   />
                 )}

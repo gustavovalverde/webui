@@ -11,7 +11,6 @@ import { useTitle } from '@/mods/shared/hooks/useTitle'
 import { getQueryClient } from '@/mods/shared/lib/queryClient'
 import { Button, Spinner } from '@/ui'
 
-// import { Json } from '@/ui/JsonViewer'
 import { useCreationEditingApp } from '../../components/creation-editing'
 import { useApps } from '../../hooks/useApps'
 import { useDeleteApp } from '../../hooks/useDeleteApp'
@@ -27,7 +26,7 @@ export const AppsBoard: AppPage = () => {
   const { openEditing } = useCreationEditingApp()
 
   useLayoutEffect(() => {
-    setTitle('Console / Apps')
+    setTitle('Applications')
   }, [setTitle])
 
   const onOpen = useCallback((refId: string) => {
@@ -68,7 +67,7 @@ export const AppsBoard: AppPage = () => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
             >
-              Initial DTMF
+              Project ID
             </th>
             <th
               scope="col"
@@ -80,21 +79,8 @@ export const AppsBoard: AppPage = () => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
             >
-              Activation Timeout
+              Voice
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
-              Interaction Timeout
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
-            >
-              Enable Events
-            </th>
-
             <th scope="col" className="relative px-6 py-3">
               <span className="sr-only">Actions</span>
             </th>
@@ -113,19 +99,13 @@ export const AppsBoard: AppPage = () => {
                 {app.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.initialDtmf || 'N/A'}
+                {app?.intentsEngineConfig?.projectId || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {app.activationIntentId || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.activationTimeout || 'N/A'}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.interactionTimeout || 'N/A'}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.enableEvents ? 'Enabled' : 'Disabled'}
+                {app?.speechConfig?.voice || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <Button

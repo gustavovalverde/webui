@@ -13,7 +13,7 @@ export const NoDomains: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Domains"
-      message="You haven’t created a Domain yet. You must create a Domain before creating Agents."
+      message="Add to your Project a SIP Domain to group several SIP Agents. (e.g office, home, etc)"
       buttonProps={{
         text: 'New Domain',
         onClick,

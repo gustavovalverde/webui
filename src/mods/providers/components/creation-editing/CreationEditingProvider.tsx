@@ -62,11 +62,11 @@ export const CreationEditingProvider: React.FC = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Provider to connect your SIP Network resources.'
-        : 'Create a Provider to connect your SIP Network resources.',
+        ? 'Edit to your Project a SIP Provider to make and receive calls from regular phones'
+        : 'Add to your Project a SIP Provider to make and receive calls from regular phones',
       description:
-        'Before creating a Number or using the Call Manager, you must add a Provider.',
-      buttonText: isEdit ? 'Edit Provider' : 'Create Provider',
+        'Complete the following form with the information given to you by your service provider.',
+      buttonText: isEdit ? 'Save' : 'Add Provider',
     }),
     [isEdit]
   )
@@ -90,7 +90,7 @@ export const CreationEditingProvider: React.FC = () => {
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
             className="mb-4"
-            label="Your Provider name"
+            label="Your Provider’s name"
             placeholder="Type a friendly name"
             disabled={isLoading}
             error={
@@ -138,7 +138,7 @@ export const CreationEditingProvider: React.FC = () => {
           <Input
             className="mb-4"
             label={isEdit ? 'Your new secret' : 'Your secret'}
-            placeholder="Type a secret"
+            placeholder="Type your secret"
             descriptionText={
               isEdit
                 ? 'If you want to update your secret, just type the new one here.'
@@ -166,8 +166,8 @@ export const CreationEditingProvider: React.FC = () => {
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
             className="mb-4"
-            label="Hostname or IP of the Provider"
-            placeholder="Type a host"
+            label="Providers Hostname or IPv4"
+            placeholder="Hostname or IPv4"
             disabled={isLoading}
             error={errors?.host && 'You must enter a host for your Provider.'}
             {...{
@@ -188,7 +188,7 @@ export const CreationEditingProvider: React.FC = () => {
             className="mb-4"
             type="cards"
             label="Transport"
-            labelOptional="Defaults to TCP"
+            labelOptional="We recommend TCP"
             {...{
               name,
               onBlur,
@@ -219,7 +219,7 @@ export const CreationEditingProvider: React.FC = () => {
           <Input
             className="mb-4"
             label="SIP registration refresh (in seconds)"
-            placeholder="Type a expires"
+            placeholder="(e.g. 600)"
             type="number"
             disabled={isLoading}
             error={

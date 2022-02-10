@@ -65,10 +65,11 @@ export const CreationEditingDomain = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Domain to build your VoIP Network.'
-        : 'Create a new Domain to build your VoIP Network.',
-      description: 'Domains are required before creating Agents.',
-      buttonText: isEdit ? 'Edit Domain' : 'Create Domain',
+        ? 'Edit a Domain.'
+        : 'Create a new Domain to manage your internal communications.',
+      description:
+        'A SIP Domain will group several SIP Agents. (e.g office, home, etc)',
+      buttonText: isEdit ? 'Save' : 'Create Domain',
     }),
     [isEdit]
   )

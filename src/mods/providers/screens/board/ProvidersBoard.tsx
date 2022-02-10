@@ -25,7 +25,7 @@ export const ProvidersBoard: AppPage = () => {
   const { openEditing } = useCreationEditingProvider()
 
   useLayoutEffect(() => {
-    setTitle('SIP Network / VoIP Providers')
+    setTitle('SIP Network / Providers')
   }, [setTitle])
 
   const onOpen = useCallback((refId: string) => {

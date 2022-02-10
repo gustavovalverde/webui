@@ -13,7 +13,7 @@ export const NoProviders: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Providers"
-      message="You haven’t created a Provider yet. You must add a Provider prior to creating a Number."
+      message="Add to your Project a SIP Provider to make and receive calls from regular phones."
       buttonProps={{
         text: 'New Provider',
         onClick,

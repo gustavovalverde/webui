@@ -12,7 +12,7 @@ export const NoAgents: React.FC<{ buttonProps?: ButtonProps }> = ({
   return (
     <Empty
       title="No Agents"
-      message="You haven’t created a Agent yet. Use Agents to get started creating Agents, and using the Call manager."
+      message="SIP Agents in the same Domain can call each other with Voice Over IP using a Software Phone (e.g Zoiper)"
       buttonProps={{
         text: 'New Agent',
         onClick,

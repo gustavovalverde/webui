@@ -12,6 +12,7 @@ import { signOut } from 'next-auth/react'
 import { currentProjectStorage } from '@/mods/projects/components/current-project'
 
 export const menu = [
+  { name: 'Apps', href: '/apps', icon: CollectionIcon },
   {
     name: 'SIP Network',
     menu: [
@@ -22,7 +23,6 @@ export const menu = [
     ],
     icon: PhoneIcon,
   },
-  { name: 'Apps', href: '/apps', icon: CollectionIcon },
   // { name: 'Functions', href: '#', icon: VariableIcon },
   { name: 'Secrets', href: '/secrets', icon: KeyIcon },
   {

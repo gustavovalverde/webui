@@ -42,8 +42,8 @@ export const CreationEditingSecret: React.FC = () => {
     <Panel
       close={onClose}
       isOpen={isOpen}
-      title="Create a Secret to connect your SIP Network resources"
-      description="You will be able to create Numbers, SIP Agents, Domains, Functions, etc."
+      title="Create an encrypted variable for your Voice Applications. "
+      description="Your secrets are only available for use within this Project."
       saveButtonProps={{
         children: 'Create Secret',
         loading: isLoading,
@@ -63,7 +63,7 @@ export const CreationEditingSecret: React.FC = () => {
         render={({ field: { name, onBlur, onChange, value } }) => (
           <Input
             className="mb-4"
-            label="Your name"
+            label="Secret name"
             placeholder="Type a friendly name"
             disabled={isLoading}
             descriptionText="Friendly name (e.g. PERSONAL_ACCESS_TOKEN)"
@@ -92,7 +92,7 @@ export const CreationEditingSecret: React.FC = () => {
           <Input.TextArea
             className="mb-4"
             rows={12}
-            label="Your value"
+            label="Your Secret"
             placeholder="Type a secret value"
             disabled={isLoading}
             error={errors?.secret && 'You must enter a secret value.'}
