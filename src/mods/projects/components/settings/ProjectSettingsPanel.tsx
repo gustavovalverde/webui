@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
 import { DeleteResource } from '@/mods/shared/components/DeleteResource'
 import { Notifier } from '@/mods/shared/components/Notification'
@@ -6,19 +7,43 @@ import { Panel } from '@/ui'
 import { Button, Checkbox, Input, Text, Title } from '@/ui'
 
 import { useDeleteProject } from '../../hooks/useDeleteProject'
-import { useCreationEditingProject } from '../creation-editing'
+import { useEditProject } from '../../hooks/useEditProject'
 import { useCurrentProject } from '../current-project'
 import { useProjectSettingsPanel } from '.'
 
 export const ProjectSettingsPanel = () => {
-  const { isOpen, close } = useProjectSettingsPanel()
+  const { isOpen, defaultValues, close } = useProjectSettingsPanel()
+  const {
+    reset,
+    control,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm({ defaultValues })
+
+  const { mutate: edit, isLoading: isEditLoading } = useEditProject()
+
+  const onSave = useCallback(
+    project => {
+      edit(project, {
+        onSuccess() {
+          close()
+
+          Notifier.success('Your Project has been successfully edited.')
+        },
+      })
+    },
+    [edit, close]
+  )
 
   const { currentProject } = useCurrentProject()
 
-  const { mutate, isLoading } = useDeleteProject()
+  const { mutate, isLoading: isDeleteLoading } = useDeleteProject()
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
 
-  const { openEditing } = useCreationEditingProject()
+  const isLoading = useMemo(
+    () => isDeleteLoading || isEditLoading,
+    [isDeleteLoading, isEditLoading]
+  )
 
   const onDelete = useCallback(() => {
     if (currentProject?.ref)
@@ -31,6 +56,10 @@ export const ProjectSettingsPanel = () => {
         },
       })
   }, [mutate, currentProject?.ref, close])
+
+  useEffect(() => {
+    reset(currentProject ?? {})
+  }, [currentProject, reset])
 
   return (
     <Panel
@@ -50,14 +79,8 @@ export const ProjectSettingsPanel = () => {
                 <Text>Project details and application.</Text>
               </div>
               <div className="mt-5 border-t border-gray-400">
-                <dl className="sm:divide-y sm:divide-gray-600">
-                  <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt className="text-sm font-medium text-gray-300">Name</dt>
-                    <dd className="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
-                      {currentProject?.name}
-                    </dd>
-                  </div>
-                  <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <dl>
+                  <div className="pt-4 sm:pt-5 sm:grid sm:grid-cols-1 sm:gap-4">
                     <dt className="text-sm font-medium text-gray-300">
                       Access Key ID
                     </dt>
@@ -65,7 +88,7 @@ export const ProjectSettingsPanel = () => {
                       <Input readOnly copy value={currentProject.accessKeyId} />
                     </dd>
                   </div>
-                  <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                  <div className="pt-4 sm:py-5 sm:grid sm:grid-cols-1 sm:gap-4">
                     <dt className="text-sm font-medium text-gray-300">
                       Access Key Secret
                     </dt>
@@ -78,17 +101,71 @@ export const ProjectSettingsPanel = () => {
                       />
                     </dd>
                   </div>
-                  <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt className="text-sm font-medium text-gray-300">
-                      Experimental APIs
-                    </dt>
-                    <dd className="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
-                      <Checkbox
-                        label="Enable experimental APIs"
-                        description="Access features that aren’t yet generally available."
-                        checked={Boolean(currentProject.allowExperiments)}
+
+                  <div className="pb-4 sm:grid sm:grid-cols-1 sm:gap-4">
+                    <dd className="text-sm text-white sm:mt-0 sm:col-span-1">
+                      <Controller
+                        name="name"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({
+                          field: { name, onBlur, onChange, value },
+                        }) => (
+                          <Input
+                            className="mb-4"
+                            label="Your Project name"
+                            placeholder="Type a friendly name"
+                            disabled={isLoading}
+                            error={
+                              errors?.name &&
+                              'You must enter a name for your Project, try something friendly and related to your organization'
+                            }
+                            {...{
+                              name,
+                              onBlur,
+                              onChange,
+                              value,
+                            }}
+                          />
+                        )}
                       />
                     </dd>
+                  </div>
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dd className="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                      <Controller
+                        name="allowExperiments"
+                        control={control}
+                        render={({
+                          field: { name, onBlur, onChange, value },
+                        }) => (
+                          <Checkbox
+                            label="Enable experimental APIs"
+                            description="Access features that aren’t yet generally available."
+                            disabled={isLoading}
+                            checked={Boolean(value)}
+                            {...{
+                              name,
+                              onBlur,
+                              onChange,
+                            }}
+                          />
+                        )}
+                      />
+                    </dd>
+                  </div>
+
+                  <div className="flex-shrink-0 flex justify-end">
+                    <Button
+                      className="ml-4"
+                      loading={isEditLoading}
+                      disabled={!isDirty}
+                      type={isDirty ? 'primary' : 'secondary'}
+                      onClick={handleSubmit(onSave)}
+                    >
+                      Save
+                    </Button>
                   </div>
                 </dl>
               </div>
@@ -108,22 +185,6 @@ export const ProjectSettingsPanel = () => {
                   <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-8">
                     <dt className="sm:col-span-2">
                       <Title level={5} className="m-0">
-                        Edit Project
-                      </Title>
-                      <Text options={{ small: true }}>
-                        Once you edit a Project, there is no going back.
-                      </Text>
-                    </dt>
-                    <dd className="flex items-center  justify-end mt-1">
-                      <Button onClick={() => openEditing(currentProject)}>
-                        Edit Project
-                      </Button>
-                    </dd>
-                  </div>
-
-                  <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-8">
-                    <dt className="sm:col-span-2">
-                      <Title level={5} className="m-0">
                         Delete Project
                       </Title>
                       <Text options={{ small: true }}>
@@ -135,6 +196,7 @@ export const ProjectSettingsPanel = () => {
                       <Button
                         type="secondary"
                         onClick={() => setDeleteModalOpen(true)}
+                        className="cancel"
                       >
                         Delete Project
                       </Button>

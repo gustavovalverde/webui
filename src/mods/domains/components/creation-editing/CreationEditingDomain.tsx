@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNumbers } from '@/mods/numbers/hooks/useNumbers'
 import { Notifier } from '@/mods/shared/components/Notification'
 import { wait } from '@/mods/shared/helpers/wait'
-import { Input, Panel, Select, Spinner } from '@/ui'
+import { Input, Panel, Select, Spinner, Text } from '@/ui'
 
 import { useCreateDomain } from '../../hooks/useCreateDomain'
 import { useEditDomain } from '../../hooks/useEditDomain'
@@ -124,6 +124,15 @@ export const CreationEditingDomain = () => {
                 disabled={isLoading}
                 labelOptional={isEdit ? '(Readonly)' : ''}
                 readOnly={isEdit}
+                actions={[
+                  <Text
+                    options={{ small: true }}
+                    className="m-0 pr-4"
+                    key="domain"
+                  >
+                    .fonoster.io
+                  </Text>,
+                ]}
                 copy={isEdit}
                 error={
                   errors?.domainUri && 'You must enter a URI for your Domain.'

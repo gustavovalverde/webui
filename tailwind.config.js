@@ -39,6 +39,7 @@ module.exports = {
         success: '#0070f3',
         cyan: '#79FFE1',
         primary: '#25b37e',
+        cancel: '#e30d4d',
         brand: {
           100: '#82dab0',
           200: '#69d3a0',

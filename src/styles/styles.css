@@ -293,3 +293,7 @@ table .thead--plans th {
 .filter {
   @apply inline-flex text-sm font-medium bg-gray-600 border border-gray-400 rounded-md shadow-sm relative w-full pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm;
 }
+
+.cancel {
+  @apply bg-cancel text-white !important;
+}

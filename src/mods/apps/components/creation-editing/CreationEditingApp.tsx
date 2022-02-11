@@ -73,7 +73,7 @@ export const CreationEditingApp: React.FC = () => {
   const headings = useMemo(
     () => ({
       title: isEdit
-        ? 'Edit a Application to connect your SIP Network resources'
+        ? 'Edit the Application'
         : 'Create a Fonoster App to connect your Telephony infrastructure with your Dialogflow Bots.',
       description:
         'You will be able to create Numbers, SIP Agents, Domains, Functions, etc.',
