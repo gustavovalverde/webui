@@ -204,8 +204,8 @@ export const CreationEditingApp: React.FC = () => {
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
-                label="Triggers welcome message from Intents Engine"
-                placeholder="(e.g. WELCOME"
+                label="Type the welcome intent ID"
+                placeholder="(e.g. WELCOME)"
                 disabled={isLoading}
                 {...{
                   name,
@@ -303,7 +303,7 @@ export const CreationEditingApp: React.FC = () => {
                       <Input
                         className="mb-4"
                         label="Type a agent"
-                        placeholder="(e.g. Joe"
+                        placeholder="(e.g. Joe)"
                         disabled={isLoading}
                         error={
                           errors?.intentsEngineConfig?.agent &&
@@ -327,7 +327,7 @@ export const CreationEditingApp: React.FC = () => {
                       <Input
                         className="mb-4"
                         label="Type a location"
-                        placeholder="(e.g. ..."
+                        placeholder="(e.g. ...)"
                         error={
                           errors?.intentsEngineConfig?.location &&
                           'You must enter a location'
@@ -387,7 +387,7 @@ export const CreationEditingApp: React.FC = () => {
                     className="mb-4"
                     label="Type the activation intent ID"
                     descriptionText="If set it will require the user to say the activation phrase (eg. Hey Alexa) You will typically use this in the browser."
-                    placeholder="(e.g. HEY_ROX"
+                    placeholder="(e.g. HEY_ROX)"
                     disabled={isLoading}
                     {...{
                       name,
