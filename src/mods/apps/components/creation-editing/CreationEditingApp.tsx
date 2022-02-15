@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useCreationEditingSecret } from '@/mods/secrets/components/creation-editing'
 import { useSecrets } from '@/mods/secrets/hooks/useSecrets'
 import { Notifier } from '@/mods/shared/components/Notification'
+import { voices } from '@/mods/shared/constants/voices'
 import { wait } from '@/mods/shared/helpers/wait'
 import { Button, Checkbox, Input, Panel, Select, Spinner } from '@/ui'
 
@@ -121,22 +122,32 @@ export const CreationEditingApp: React.FC = () => {
           />
 
           <Controller
-            name="initialDtmf"
+            name="speechConfig.voice"
             control={control}
+            rules={{ required: true }}
             render={({ field: { name, onBlur, onChange, value } }) => (
-              <Input
-                className="mb-4"
-                label="Initial DTMF"
-                labelOptional="(optional)"
-                placeholder="It’s a string that allows 1234567890#*"
-                disabled={isLoading}
+              <Select
+                className={hasSecrets ? 'mb-4' : 'mb-0'}
+                label="Voice name"
+                disabled={!hasSecrets || isLoading}
+                error={
+                  errors?.speechConfig?.voice &&
+                  'You must enter a voice for your Application.'
+                }
                 {...{
                   name,
                   onBlur,
                   onChange,
                   value,
                 }}
-              />
+              >
+                <Select.Option value="">Choose a voice name</Select.Option>
+                {voices.map(voice => (
+                  <Select.Option key={voice} value={voice}>
+                    {voice}
+                  </Select.Option>
+                ))}
+              </Select>
             )}
           />
 
@@ -188,38 +199,13 @@ export const CreationEditingApp: React.FC = () => {
           )}
 
           <Controller
-            name="speechConfig.voice"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { name, onBlur, onChange, value } }) => (
-              <Input
-                className="mb-4"
-                label="Type a voice"
-                placeholder="(e.g. en-US-Wavenet-F)"
-                disabled={isLoading}
-                error={
-                  errors?.speechConfig?.voice &&
-                  'You must enter a voice for your Application.'
-                }
-                {...{
-                  name,
-                  onBlur,
-                  onChange,
-                  value,
-                }}
-              />
-            )}
-          />
-
-          <Controller
-            name="speechConfig.languageCode"
+            name="intentsEngineConfig.welcomeIntentId"
             control={control}
             render={({ field: { name, onBlur, onChange, value } }) => (
               <Input
                 className="mb-4"
-                label="Type a lang-code"
-                placeholder="(e.g. en-US)"
-                labelOptional="(optional)"
+                label="Triggers welcome message from Intents Engine"
+                placeholder="(e.g. WELCOME"
                 disabled={isLoading}
                 {...{
                   name,
@@ -231,22 +217,24 @@ export const CreationEditingApp: React.FC = () => {
             )}
           />
 
-          <Select
-            className="mb-4"
-            label="Select Intents Engine Type"
-            disabled={isLoading}
-            value={intensConfigType}
-            onChange={({ target: { value } }) => setIntentsConfigType(value)}
-          >
-            <Select.Option value="">Choose a Engine</Select.Option>
-            {[{ name: 'DialogflowES' }].map(({ name }) => (
-              <Select.Option key={name} value={name}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
+          {!isEdit && (
+            <Select
+              className="mb-4"
+              label="Select Intents Engine Type"
+              disabled={isLoading}
+              value={intensConfigType}
+              onChange={({ target: { value } }) => setIntentsConfigType(value)}
+            >
+              <Select.Option value="">Choose a Engine</Select.Option>
+              {[{ name: 'DialogflowES' }].map(({ name }) => (
+                <Select.Option key={name} value={name}>
+                  {name}
+                </Select.Option>
+              ))}
+            </Select>
+          )}
 
-          {intensConfigType && (
+          {(intensConfigType || isEdit) && (
             <>
               <Controller
                 name="intentsEngineConfig.projectId"
@@ -271,6 +259,7 @@ export const CreationEditingApp: React.FC = () => {
                   />
                 )}
               />
+
               <Controller
                 name="intentsEngineConfig.secretName"
                 control={control}
@@ -369,13 +358,36 @@ export const CreationEditingApp: React.FC = () => {
           {showMoreOptions && (
             <>
               <Controller
+                name="initialDtmf"
+                control={control}
+                rules={{ pattern: /^[0-9*#]*$/ }}
+                render={({ field: { name, onBlur, onChange, value } }) => (
+                  <Input
+                    className="mb-4"
+                    label="Initial DTMF"
+                    labelOptional="(optional)"
+                    placeholder="It’s a string that allows 1234567890#*"
+                    disabled={isLoading}
+                    error={errors?.initialDtmf && 'You must enter valid DTMF'}
+                    {...{
+                      name,
+                      onBlur,
+                      onChange,
+                      value,
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
                 name="activationIntentId"
                 control={control}
                 render={({ field: { name, onBlur, onChange, value } }) => (
                   <Input
                     className="mb-4"
                     label="Type the activation intent ID"
-                    placeholder="(e.g. WELCOME"
+                    descriptionText="If set it will require the user to say the activation phrase (eg. Hey Alexa) You will typically use this in the browser."
+                    placeholder="(e.g. HEY_ROX"
                     disabled={isLoading}
                     {...{
                       name,
@@ -431,16 +443,36 @@ export const CreationEditingApp: React.FC = () => {
                 name="transferConfig.message"
                 control={control}
                 render={({ field: { name, onBlur, onChange, value } }) => (
-                  <Input
+                  <Input.TextArea
                     className="mb-4"
                     label="Type a transfer message"
-                    placeholder="(e.g. Please wait while we transfer you"
+                    rows={8}
+                    labelOptional="Plain text to SSML"
+                    placeholder="(e.g. Please wait while we transfer you)"
                     disabled={isLoading}
                     {...{
                       name,
                       onBlur,
                       onChange,
                       value,
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
+                name="intentsEngineConfig.emulateTelephonyPlatform"
+                control={control}
+                render={({ field: { name, onBlur, onChange, value } }) => (
+                  <Checkbox
+                    label="Emulate Telephony Platform"
+                    description="Emulate the Telephony Platform for testing purposes."
+                    disabled={isLoading}
+                    checked={Boolean(value)}
+                    {...{
+                      name,
+                      onBlur,
+                      onChange,
                     }}
                   />
                 )}

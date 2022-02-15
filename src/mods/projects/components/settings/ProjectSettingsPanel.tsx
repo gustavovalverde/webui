@@ -8,6 +8,7 @@ import { Button, Checkbox, Input, Text, Title } from '@/ui'
 
 import { useDeleteProject } from '../../hooks/useDeleteProject'
 import { useEditProject } from '../../hooks/useEditProject'
+import { useRefreshSecret } from '../../hooks/useRefreshSecret'
 import { useCurrentProject } from '../current-project'
 import { useProjectSettingsPanel } from '.'
 
@@ -38,12 +39,25 @@ export const ProjectSettingsPanel = () => {
   const { currentProject } = useCurrentProject()
 
   const { mutate, isLoading: isDeleteLoading } = useDeleteProject()
+  const { mutate: mutateRefreshSecret, isLoading: isRefreshSecretLoading } =
+    useRefreshSecret()
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
 
   const isLoading = useMemo(
     () => isDeleteLoading || isEditLoading,
     [isDeleteLoading, isEditLoading]
   )
+
+  const onRefreshSecret = useCallback(() => {
+    if (currentProject?.ref)
+      mutateRefreshSecret(currentProject.ref, {
+        onSuccess() {
+          Notifier.success(
+            'Your secret access key has been successfully renewed.'
+          )
+        },
+      })
+  }, [mutateRefreshSecret, currentProject?.ref])
 
   const onDelete = useCallback(() => {
     if (currentProject?.ref)
@@ -92,13 +106,24 @@ export const ProjectSettingsPanel = () => {
                     <dt className="text-sm font-medium text-gray-300">
                       Access Key Secret
                     </dt>
-                    <dd className="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                    <dd className="mt-1 text-sm text-white sm:mt-0 sm:col-span-2 flex flex-col items-end">
                       <Input
                         reveal
                         readOnly
                         copy
                         value={currentProject.accessKeySecret}
+                        className="w-full"
                       />
+                      <Button
+                        key="refresh-secret"
+                        size="small"
+                        type="secondary"
+                        onClick={onRefreshSecret}
+                        loading={isRefreshSecretLoading}
+                        className="mt-2 text"
+                      >
+                        {isRefreshSecretLoading ? 'Renewing...' : 'Renew Key'}
+                      </Button>
                     </dd>
                   </div>
 

@@ -15,6 +15,7 @@ export default async function handle(
     put: async () => manager.updateProject(req.body),
     delete: async () => manager.deleteProject(req.body.ref),
     get: async () => manager.listProjects(),
+    patch: async () => manager.renewAccessKeySecret({ ref: req.body.ref }),
   }
 
   return requestHandler({ handlers, req, res })

@@ -73,7 +73,7 @@ export const AppsBoard: AppPage = () => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-white tracking-wider"
             >
-              Activation Intent ID
+              Welcome Intent ID
             </th>
             <th
               scope="col"
@@ -102,7 +102,7 @@ export const AppsBoard: AppPage = () => {
                 {app?.intentsEngineConfig?.projectId || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                {app.activationIntentId || 'N/A'}
+                {app?.intentsEngineConfig?.welcomeIntentId || 'N/A'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {app?.speechConfig?.voice || 'N/A'}
