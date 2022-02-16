@@ -1,3 +1,4 @@
+import { PhoneIcon } from '@heroicons/react/outline'
 import type { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import { useCallback, useLayoutEffect, useState } from 'react'
@@ -27,6 +28,30 @@ export const NumbersBoard: AppPage = () => {
   useLayoutEffect(() => {
     setTitle('SIP Network / Numbers')
   }, [setTitle])
+
+  const onTestCall = useCallback(async (e164Number: string) => {
+    Notifier.info('Test Call in progress...', { closeButton: false })
+
+    const config = {
+      displayName: 'ACCT Test',
+      domain: 'test.sip.fonoster.io',
+      username: 'testacct',
+      secret: 'changeit',
+      audioElementId: 'remoteAudio',
+      server: 'ws://sip.fonoster.io:5062',
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const WPhone = require('wphone').default
+
+    const wPhone = new WPhone(config)
+
+    await wPhone.connect()
+    await wPhone.call({
+      targetAOR: 'sip:voice@default',
+      extraHeaders: [`X-DID-Info: ${e164Number}`],
+    })
+  }, [])
 
   const onOpen = useCallback((refId: string) => {
     setDeleteModalOpen(true)
@@ -97,7 +122,7 @@ export const NumbersBoard: AppPage = () => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                 {num.ingressInfo?.webhook}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <td className="flex items-center px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <Button
                   size="small"
                   type="secondary"
@@ -106,8 +131,20 @@ export const NumbersBoard: AppPage = () => {
                 >
                   Delete
                 </Button>
-                <Button size="small" onClick={() => openEditing(num)}>
+                <Button
+                  size="small"
+                  type="secondary"
+                  onClick={() => openEditing(num)}
+                >
                   Edit
+                </Button>
+                <Button
+                  size="small"
+                  className="ml-4"
+                  icon={<PhoneIcon className="h-4 w-4" aria-hidden="true" />}
+                  onClick={() => onTestCall(num.e164Number)}
+                >
+                  Test Call
                 </Button>
               </td>
             </tr>

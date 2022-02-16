@@ -1,4 +1,3 @@
-import { PhoneIcon } from '@heroicons/react/outline'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
 import { useCallback, useLayoutEffect, useState } from 'react'
@@ -116,20 +115,8 @@ export const AppsBoard: AppPage = () => {
                 >
                   Delete
                 </Button>
-                <Button
-                  size="small"
-                  type="secondary"
-                  onClick={() => openEditing(app as any)}
-                >
+                <Button size="small" onClick={() => openEditing(app as any)}>
                   Edit
-                </Button>
-                <Button
-                  size="small"
-                  className="ml-4"
-                  disabled
-                  icon={<PhoneIcon className="h-4 w-4" aria-hidden="true" />}
-                >
-                  Test Call
                 </Button>
               </td>
             </tr>
